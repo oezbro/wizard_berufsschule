@@ -13,18 +13,44 @@ namespace Wizard_Aydin_Olga.Controllers
         public static int aktuelleRunde;
 
 
-        public ActionResult Index()
+        public ActionResult StartView()
         {
             return View();
         }
 
-        public ActionResult KartenVerteilen()
+        public ActionResult KartenAusteilen(int anzahlSpieler, int kartenImDeck, int aktuelleRunde)
         {
+            kartenImDeck = 60;
+            aktuelleRunde++;
+
+            var rand = new Random();
+            List<int> listNumbers = new List<int>();
+            int number;
+            for (int i = 0; i < aktuelleRunde; i++)
+            {
+                do
+                {
+                    number = rand.Next(1, kartenImDeck);
+                } while (listNumbers.Contains(number));
+                listNumbers.Add(number);
+            }
+
             return View();
         }
 
-        public ActionResult Index()
+        public ActionResult AuswahlStich()
         {
+            int anzahlStiche = aktuelleRunde++;
+
+
+            return View();
+        }
+
+        public ActionResult PunkteAuswertung()
+        {
+            aktuelleRunde++;
+
+
             return View();
         }
     }

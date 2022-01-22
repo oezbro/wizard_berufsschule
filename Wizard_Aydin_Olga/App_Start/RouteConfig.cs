@@ -16,7 +16,7 @@ namespace Wizard_Aydin_Olga
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Wizard", action = "StartView", id = UrlParameter.Optional }
             );
         }
     }
