@@ -11,5 +11,6 @@ namespace Wizard_Aydin_Olga.Models
         public int SpielerAnzahl { get; set; }
         public int Punkte { get; set; }
         public int KartenWert { get; set; }
+        public string SpielerName { get; set; }
     }
 }
