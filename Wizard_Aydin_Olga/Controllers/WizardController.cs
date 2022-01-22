@@ -19,6 +19,21 @@ namespace Wizard_Aydin_Olga.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult StartView(WizardModel wizardModel)
+        {
+            List<string> TeilnehmerListe = new List<string>();
+            TeilnehmerListe.Add(wizardModel.SpielerName1);
+            TeilnehmerListe.Add(wizardModel.SpielerName2);
+
+            return RedirectToAction("GameView");
+        }
+
+        public ActionResult GameView()
+        {
+            return View();
+        }
+
         public ActionResult KartenAusteilen(int anzahlSpieler, int kartenImDeck, int aktuelleRunde)
         {
             kartenImDeck = 60;
