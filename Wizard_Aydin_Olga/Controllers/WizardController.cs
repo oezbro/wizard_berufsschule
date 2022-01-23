@@ -22,14 +22,17 @@ namespace Wizard_Aydin_Olga.Controllers
         [HttpPost]
         public ActionResult StartView(WizardModel wizardModel)
         {
+            aktuelleRunde = 1;
+            anzahlSpieler = 2;
+
             List<string> TeilnehmerListe = new List<string>();
             TeilnehmerListe.Add(wizardModel.SpielerName1);
             TeilnehmerListe.Add(wizardModel.SpielerName2);
 
-            return RedirectToAction("GameView");
+            return RedirectToAction("GameView", wizardModel);
         }
 
-        public ActionResult GameView()
+        public ActionResult GameView(WizardModel wizardModel)
         {
             return View();
         }
@@ -37,7 +40,6 @@ namespace Wizard_Aydin_Olga.Controllers
         public ActionResult KartenAusteilen(int anzahlSpieler, int kartenImDeck, int aktuelleRunde)
         {
             kartenImDeck = 60;
-            aktuelleRunde++;
 
             var rand = new Random();
             List<int> listNumbers = new List<int>();
@@ -49,6 +51,10 @@ namespace Wizard_Aydin_Olga.Controllers
                     number = rand.Next(1, kartenImDeck);
                 } while (listNumbers.Contains(number));
                 listNumbers.Add(number);
+
+                KartenWert(number);
+
+                kartenImDeck--;
             }
 
             return View();
@@ -68,6 +74,44 @@ namespace Wizard_Aydin_Olga.Controllers
 
 
             return View();
+        }
+
+        public WizardModel KartenWert(int rndNumber)
+        {
+            WizardModel wizardModel = new WizardModel();
+
+            if (rndNumber <= 13)
+            {
+                wizardModel.KartenWert = rndNumber;
+                wizardModel.KartenFarbe = "rot";
+            }
+            if (rndNumber > 14 && rndNumber <= 26 )
+            {
+                wizardModel.KartenWert = rndNumber / 2;
+                wizardModel.KartenFarbe = "grün";
+            }
+            if (rndNumber > 27 && rndNumber <= 39)
+            {
+                wizardModel.KartenWert = rndNumber / 3;
+                wizardModel.KartenFarbe = "gelb";
+            }
+            if (rndNumber > 40 && rndNumber <= 52)
+            {
+                wizardModel.KartenWert = rndNumber / 4;
+                wizardModel.KartenFarbe = "blau";
+            }
+            if (rndNumber > 53 && rndNumber <= 56)
+            {
+                wizardModel.KartenWert = rndNumber / 5;
+                wizardModel.IstNarr = true;
+            }
+            if (rndNumber > 57 && rndNumber <= 60)
+            {
+                wizardModel.KartenWert = rndNumber / 6;
+                wizardModel.IstWizard = true;
+            }
+
+            return wizardModel;
         }
     }
 }
