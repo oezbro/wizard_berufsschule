@@ -1,2 +1,89 @@
-﻿body {
+﻿.playingGround {
+	position: relative;
+	margin-top: -25px;
+}
+.playingGround .opponentsCardDeck, .playingGround .ownCardDeck {
+	max-width : 800px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.playingGround .card {
+	width: 80px;
+	height: 130px;
+	background-image: url(Karten/55.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	transition: all .4s ease-out;
+}
+.playingGround .opponentsCardDeck .card {
+	transform-origin: top left;
+}
+.playingGround .ownCardDeck .card {
+	transform-origin: bottom left;
+}
+.playingGround .opponentsCardDeck .card:hover, .playingGround .ownCardDeck .card:hover {
+	transform: scale(1.5);
+}
+
+.playingGround .playingBoard {
+	width: 300px;
+	height: 300px;
+	display: block;
+	background-color: #cccccc;
+	margin-left: auto;
+	margin-right: auto;
+}
+.playingGround .trumpDisplay {
+	position: absolute;
+	right: 100px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.playingGround .trumpDisplay .trumpColorWrap {
+	width: 50px;
+	height: 50px;
+	display: block;
+	background-color: #ff0000;
+}
+.playingGround .pointBoard {
+	position: absolute;
+	left: 50px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	flex-direction: column;
+	max-width: 300px;
+	width: 100%;
+}
+.playingGround .pointBoard .row {
+	display: flex;
+} 
+.playingGround .pointBoard .row > div {
+	padding-left: 15px;
+	padding-right: 15px;
+	border: 1px solid #000;
+}
+.playingGround .pointBoard .row > div:first-child {
+	flex-basis: 40px;
+	max-width: 40px;
+	width: 100%;
+}
+
+.playingGround .pointBoard .row.firstRow > div:not(:first-child) {
+	flex-basis: calc((100% - 40px) / 2);
+	max-width: calc((100% - 40px) / 2);
+	width: 100%;
+}
+
+.playingGround .pointBoard .row:not(.firstRow) .playerOnePoints, .playingGround .pointBoard .row:not(.firstRow) .playerTwoPoints {
+	flex-basis: calc(((100% - 40px) / 2) - 40px);
+	max-width: calc(((100% - 40px) / 2) - 40px);
+	width: 100%;
+}
+
+.playingGround .pointBoard .row:not(.firstRow) .playerOneTricks, .playingGround .pointBoard .row:not(.firstRow) .playerTwoTricks {
+	flex-basis: 40px;
+	max-width: 40px;
+	width: 100%;
 }
