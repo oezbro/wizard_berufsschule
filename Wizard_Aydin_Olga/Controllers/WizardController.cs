@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Wizard_Aydin_Olga.Models;
+using Wizard_Aydin_Olga.Controllers;
 
 namespace Wizard_Aydin_Olga.Controllers
 {
@@ -29,10 +30,10 @@ namespace Wizard_Aydin_Olga.Controllers
             TeilnehmerListe.Add(wizardModel.SpielerName1);
             TeilnehmerListe.Add(wizardModel.SpielerName2);
 
-            return RedirectToAction("GameView", wizardModel);
+            return View("GameView", wizardModel);
         }
 
-        public ActionResult GameView(WizardModel wizardModel)
+        public ActionResult GameView()
         {
             return View();
         }

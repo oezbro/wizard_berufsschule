@@ -13,15 +13,15 @@
 	<p>Möchtest du und dein Freund gemeinsam die Herausforderung bestreiten, eure Gabe der Vorhersehung zu entwickeln und zu festigen?</p>
 	<p>Dann gebt euren Namen ein und drückt auf den Knopf!</p>
 
-	<div class="nameBox">
-		@using (Html.BeginForm("StartView", "Wizard", FormMethod.Post))
-		{
-			<label for="SpielerName1">Spielername 1</label>
-			@Html.TextBoxFor(model => model.SpielerName1)
-			<label for="SpielerName2">Spielername 2</label>
-			@Html.TextBoxFor(model => model.SpielerName2)
-			<button type="submit">Spiel starten</button>
-		}
-	</div>
+    <div class="nameBox">
+        @using (Html.BeginForm("StartView", "Wizard", FormMethod.Post))
+        {
+            <label for="SpielerName1">Spielername 1</label>
+            @Html.TextBoxFor(model => model.SpielerName1)
+            <label for="SpielerName2">Spielername 2</label>
+            @Html.TextBoxFor(model => model.SpielerName2)
+            <button type="submit">Spiel starten</button>
+        }
+    </div>
 </body>
 </html>
