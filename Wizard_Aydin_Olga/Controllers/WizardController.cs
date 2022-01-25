@@ -30,17 +30,23 @@ namespace Wizard_Aydin_Olga.Controllers
             TeilnehmerListe.Add(wizardModel.SpielerName1);
             TeilnehmerListe.Add(wizardModel.SpielerName2);
 
-            return View("GameView", wizardModel);
+            return RedirectToAction("GameView", wizardModel);
         }
 
-        public ActionResult GameView()
+        public ActionResult GameView(WizardModel wizardModel)
         {
-            return View();
+            int kartenImDeck = 60;
+
+            KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
+
+            return View(wizardModel);
         }
 
         public ActionResult KartenAusteilen(int anzahlSpieler, int kartenImDeck, int aktuelleRunde)
         {
             kartenImDeck = 60;
+
+            WizardModel wizardModel = new WizardModel();
 
             var rand = new Random();
             List<int> listNumbers = new List<int>();
@@ -111,6 +117,8 @@ namespace Wizard_Aydin_Olga.Controllers
                 wizardModel.KartenWert = rndNumber / 6;
                 wizardModel.IstWizard = true;
             }
+
+            wizardModel.KartenAufDerHand.Add(rndNumber);
 
             return wizardModel;
         }

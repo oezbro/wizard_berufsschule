@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Wizard_Aydin_Olga.Models;
 
 namespace Wizard_Aydin_Olga.Models
 {
@@ -17,5 +18,6 @@ namespace Wizard_Aydin_Olga.Models
         public bool IstWizard { get; set; }
         public bool IstNarr { get; set; }
         public int AnzahlStiche { get; set; }
+        public List<int> KartenAufDerHand { get; set; }
     }
 }
