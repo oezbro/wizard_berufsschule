@@ -7,22 +7,36 @@
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+	height: 80px;
 }
+
 .playingGround .card {
 	width: 80px;
 	height: 130px;
-	background-image: url(Karten/55.png);
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
 	transition: all .4s ease-out;
 }
-.playingGround .opponentsCardDeck .card {
+
+.playingGround .card img {
+	width: 80px;
+	height: 130px;
+	transition: all .4s ease-out;
+	pointer-events: none;
+}
+.playingGround .opponentsCardDeck .card img {
 	transform-origin: top left;
+	/*background-image: url(Karten/blaue8.png);*/
 }
-.playingGround .ownCardDeck .card {
+.playingGround .opponentsCardDeck .card {
+	pointer-events: all;
+}
+.playingGround .opponentsCardDeck.noTurn .card {
+	pointer-events: none;
+}
+.playingGround .ownCardDeck .card img {
 	transform-origin: bottom left;
+	/*background-image: url(Karten/blaue10.png);*/
 }
-.playingGround .opponentsCardDeck .card:hover, .playingGround .ownCardDeck .card:hover {
+.playingGround .opponentsCardDeck .card:hover img, .playingGround .ownCardDeck .card:hover img {
 	transform: scale(1.5);
 }
 
