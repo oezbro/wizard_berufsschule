@@ -30,7 +30,7 @@ namespace Wizard_Aydin_Olga.Controllers
             TeilnehmerListe.Add(wizardModel.SpielerName1);
             TeilnehmerListe.Add(wizardModel.SpielerName2);
 
-            return RedirectToAction("GameView", wizardModel);
+            return View("GameView", wizardModel);
         }
 
         public ActionResult GameView(WizardModel wizardModel)
