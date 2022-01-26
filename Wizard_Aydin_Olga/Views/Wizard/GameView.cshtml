@@ -1,39 +1,39 @@
 ﻿@model Wizard_Aydin_Olga.Models.WizardModel
 
-<div class="playingGround">
-    <div class="opponentsCardDeck">
-        <div class="card" data-color="green" data-value="7" data-beatable="8" draggable="true" ondragstart="onDragStart(event);">
+    <div class="playingGround">
+        <div class="opponentsCardDeck">
+            <div class="card" data-color="green" data-value="7" data-beatable="8" draggable="true" ondragstart="onDragStart(event);">
+            </div>
         </div>
-    </div>
-    <div id="playingBoard" class="playingBoard" ondragover="onDragOver(event);" ondrop="onDrop(event);"></div>
-    <div class="ownCardDeck">
-        <div class="card" data-color="red" data-value="3" data-beatable="4" draggable="true" ondragstart="onDragStart(event);">
-            <form method="post" action="/Home/BenutzerAusgewählt">
-                <div class="btnBenutzers" align="center" style="width: 100%">
-                    @foreach (var personenListe in Model.KartenAufDerHand)
-                    {
+        <div id="playingBoard" class="playingBoard" ondragover="onDragOver(event);" ondrop="onDrop(event);"></div>
+        <div class="ownCardDeck">
+            <div class="card" data-color="red" data-value="3" data-beatable="4" draggable="true" ondragstart="onDragStart(event);">
+                <form method="post" action="/Home/BenutzerAusgewählt">
+                    <div class="btnBenutzers" align="center" style="width: 100%">
+                        @*@foreach (var kartenListe in Model.KartenAufDerHand)
+                        {
 
-                    }
-                </div>
-            </form>
+                        }*@
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="trumpDisplay">
+            <p>Trumpf:</p>
+            <div class="trumpColorWrap"></div>
+        </div>
+        <div class="pointBoard">
+            <div class="firstRow row">
+                <div class="round">&nbsp;</div>
+                <div class="playerOnePoints">@Model.SpielerName1</div>
+                <div class="playerTwoPoints">@Model.SpielerName2</div>
+            </div>
+            <div class="row">
+                <div class="round"><p>1</p></div>
+                <div class="playerOnePoints"><p>&nbsp;</p></div>
+                <div class="playerOneTricks"><p>1</p></div>
+                <div class="playerTwoPoints"><p>&nbsp;</p></div>
+                <div class="playerTwoTricks"><p>0</p></div>
+            </div>
         </div>
     </div>
-    <div class="trumpDisplay">
-        <p>Trumpf:</p>
-        <div class="trumpColorWrap"></div>
-    </div>
-    <div class="pointBoard">
-        <div class="firstRow row">
-            <div class="round">&nbsp;</div>
-            <div class="playerOnePoints">Spieler 1</div>
-            <div class="playerTwoPoints">Spieler 2</div>
-        </div>
-        <div class="row">
-            <div class="round"><p>1</p></div>
-            <div class="playerOnePoints"><p>&nbsp;</p></div>
-            <div class="playerOneTricks"><p>1</p></div>
-            <div class="playerTwoPoints"><p>&nbsp;</p></div>
-            <div class="playerTwoTricks"><p>0</p></div>
-        </div>
-    </div>
-</div>

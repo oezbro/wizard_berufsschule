@@ -30,16 +30,26 @@ namespace Wizard_Aydin_Olga.Controllers
             TeilnehmerListe.Add(wizardModel.SpielerName1);
             TeilnehmerListe.Add(wizardModel.SpielerName2);
 
+            if (wizardModel.SpielerName1 == null)
+            {
+                wizardModel.SpielerName1 = "Spieler 1";
+            }
+
+            if (wizardModel.SpielerName2 == null)
+            {
+                wizardModel.SpielerName2 = "Spieler 2";
+            }
+
             return View("GameView", wizardModel);
         }
 
-        public ActionResult GameView(WizardModel wizardModel)
+        public ActionResult GameView()
         {
             int kartenImDeck = 60;
 
             KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
 
-            return View(wizardModel);
+            return View();
         }
 
         public ActionResult KartenAusteilen(int anzahlSpieler, int kartenImDeck, int aktuelleRunde)
@@ -75,6 +85,15 @@ namespace Wizard_Aydin_Olga.Controllers
             return View();
         }
 
+        public ActionResult AuswertungStich()
+        {
+            aktuelleRunde++;
+
+            PunkteAuswertung();
+
+            return View();
+        }
+
         public ActionResult PunkteAuswertung()
         {
             aktuelleRunde++;
@@ -92,7 +111,7 @@ namespace Wizard_Aydin_Olga.Controllers
                 wizardModel.KartenWert = rndNumber;
                 wizardModel.KartenFarbe = "rot";
             }
-            if (rndNumber > 14 && rndNumber <= 26 )
+            if (rndNumber > 14 && rndNumber <= 26)
             {
                 wizardModel.KartenWert = rndNumber / 2;
                 wizardModel.KartenFarbe = "grün";
@@ -121,6 +140,13 @@ namespace Wizard_Aydin_Olga.Controllers
             wizardModel.KartenAufDerHand.Add(rndNumber);
 
             return wizardModel;
+        }
+
+        public ActionResult TrumpfAuswahl()
+        {
+
+
+            return View();
         }
     }
 }
