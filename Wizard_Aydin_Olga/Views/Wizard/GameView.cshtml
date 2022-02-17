@@ -1,5 +1,6 @@
 ﻿@model Wizard_Aydin_Olga.Models.WizardModel
-
+@using (Html.BeginForm("GameView", "Wizard", FormMethod.Get))
+{
     <div class="playingGround">
         <div class="opponentsCardDeck">
             <div class="card" data-color="blue" data-value="8" data-beatable="9" draggable="true" ondragstart="onDragStart(event);">
@@ -9,13 +10,13 @@
         <div id="playingBoard" class="playingBoard" ondragover="onDragOver(event);" ondrop="onDrop(event);"></div>
         <div class="ownCardDeck">
             <div class="card" data-color="blue" data-value="10" data-beatable="11" draggable="true" ondragstart="onDragStart(event);">
-                <img src="../Content/Karten/blaue10.png"/>
+                <img src="../Content/Karten/blaue10.png" />
                 <form method="post" action="/Home/BenutzerAusgewählt">
                     <div class="btnBenutzers" align="center" style="width: 100%">
                         @*@foreach (var kartenListe in Model.KartenAufDerHand)
-                        {
+                            {
 
-                        }*@
+                            }*@
                     </div>
                 </form>
             </div>
@@ -39,3 +40,4 @@
             </div>
         </div>
     </div>
+}

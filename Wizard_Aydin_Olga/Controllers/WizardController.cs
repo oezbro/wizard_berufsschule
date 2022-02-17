@@ -14,6 +14,7 @@ namespace Wizard_Aydin_Olga.Controllers
         public static int anzahlSpieler;
         public static int aktuelleRunde;
 
+        public List<int> KartenAufDerHand =new List<int>();
 
         public ActionResult StartView()
         {
@@ -40,16 +41,20 @@ namespace Wizard_Aydin_Olga.Controllers
                 wizardModel.SpielerName2 = "Spieler 2";
             }
 
+            int kartenImDeck = 60;
+
+            KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
+
             return View("GameView", wizardModel);
         }
 
-        public ActionResult GameView()
+        public ActionResult GameView(WizardModel wizardModel)
         {
             int kartenImDeck = 60;
 
             KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
 
-            return View();
+            return View(wizardModel);
         }
 
         public ActionResult KartenAusteilen(int anzahlSpieler, int kartenImDeck, int aktuelleRunde)
@@ -69,12 +74,12 @@ namespace Wizard_Aydin_Olga.Controllers
                 } while (listNumbers.Contains(number));
                 listNumbers.Add(number);
 
-                KartenWert(number);
+                KartenWert(number); 
 
                 kartenImDeck--;
             }
 
-            return View();
+            return View(wizardModel);
         }
 
         public ActionResult AuswahlStich()
@@ -85,19 +90,22 @@ namespace Wizard_Aydin_Olga.Controllers
             return View();
         }
 
-        public ActionResult AuswertungStich()
+        public ActionResult AuswertungStich(WizardModel wizardModel)
         {
             aktuelleRunde++;
 
-            PunkteAuswertung();
+            PunkteAuswertung(wizardModel);
 
             return View();
         }
 
-        public ActionResult PunkteAuswertung()
+        public ActionResult PunkteAuswertung(WizardModel wizardModel)
         {
             aktuelleRunde++;
+            if (wizardModel.SticheRichtigAngesagt)
+            {
 
+            }
 
             return View();
         }
@@ -137,7 +145,9 @@ namespace Wizard_Aydin_Olga.Controllers
                 wizardModel.IstWizard = true;
             }
 
-            wizardModel.KartenAufDerHand.Add(rndNumber);
+            KartenAufDerHand.Add(rndNumber);
+
+            wizardModel.KartenAufDerHand = KartenAufDerHand;
 
             return wizardModel;
         }
