@@ -20,5 +20,6 @@ namespace Wizard_Aydin_Olga.Models
         public int AnzahlStiche { get; set; }
         public List<int> KartenAufDerHand { get; set; }
         public bool SticheRichtigAngesagt { get; set; }
+        public string Trumpf { get; set; }
     }
 }

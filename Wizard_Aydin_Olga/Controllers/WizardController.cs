@@ -45,6 +45,8 @@ namespace Wizard_Aydin_Olga.Controllers
 
             KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
 
+            wizardModel.Trumpf = TrumpfBestimmen();
+
             return View("GameView", wizardModel);
         }
 
@@ -81,6 +83,19 @@ namespace Wizard_Aydin_Olga.Controllers
 
             return View(wizardModel);
         }
+
+        public string TrumpfBestimmen()
+        {
+            string[] farben = { "rot", "blau", "gruen", "gelb" };
+            Random rand = new Random();
+
+            int index = rand.Next(farben.Length);
+
+            string trumpf = farben[index];
+
+            return trumpf;
+        }
+
 
         public ActionResult AuswahlStich()
         {
@@ -150,13 +165,6 @@ namespace Wizard_Aydin_Olga.Controllers
             wizardModel.KartenAufDerHand = KartenAufDerHand;
 
             return wizardModel;
-        }
-
-        public ActionResult TrumpfAuswahl()
-        {
-
-
-            return View();
         }
     }
 }
