@@ -1,7 +1,60 @@
-﻿.playingGround {
+﻿h1 {
+	font-family: 'Magic School One';
+	font-size: 50px;
+	line-height: 55px;
+	text-align: center;
+}
+p {
+	font-family: 'Magic School Two';
+	font-size: 30px;
+	line-height: 35px;
+	text-align: center;
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+form {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+form .firstPlayerInput {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 20px;
+}
+
+form .secondPlayerInput {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 20px;
+}
+
+form button[type="submit"] {
+	margin-top: 20px;
+	width: 50px;
+	height: 50px;
+	border: none;
+	background-color: transparent;
+	font-size: 0;
+	background-image: url("Icons/playbutton.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+form button[type="submit"]:hover {
+	background-image: url("Icons/playbuttonHover.png");
+}
+
+.playingGround {
 	position: relative;
 	margin-top: -25px;
 }
+
 .playingGround .opponentsCardDeck, .playingGround .ownCardDeck {
 	max-width : 800px;
 	width: 100%;
