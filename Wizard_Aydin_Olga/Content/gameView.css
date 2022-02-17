@@ -1,11 +1,11 @@
 ﻿h1 {
-	font-family: 'Magic School One';
 	font-size: 50px;
 	line-height: 55px;
 	text-align: center;
+	font-family: 'Magic School Two';
 }
 p {
-	font-family: 'Magic School Two';
+	font-family: 'Magic School One';
 	font-size: 30px;
 	line-height: 35px;
 	text-align: center;
@@ -13,7 +13,7 @@ p {
 	margin-left: auto;
 	margin-right: auto;
 }
-form {
+form .nameBox {
 	max-width: 800px;
 	margin-left: auto;
 	margin-right: auto;
