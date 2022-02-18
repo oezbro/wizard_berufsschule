@@ -43,7 +43,10 @@ namespace Wizard_Aydin_Olga.Controllers
 
             int kartenImDeck = 60;
 
-            KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
+            for (int i = 0; i < anzahlSpieler; i++)
+            {
+                KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
+            }
 
             wizardModel.Trumpf = TrumpfBestimmen();
 
@@ -80,6 +83,8 @@ namespace Wizard_Aydin_Olga.Controllers
 
                 kartenImDeck--;
             }
+
+            wizardModel.KartenAufDerHand = listNumbers;
 
             return View(wizardModel);
         }
