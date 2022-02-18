@@ -1,11 +1,4 @@
-﻿opponentButton = document.createElement("div");
-opponentButton.classList.add("startEvaluation");
-opponentButton.innerHTML = "Auswertung starten";
-ownButton = document.createElement("div");
-ownButton.classList.add("turnOver");
-ownButton.innerHTML = "Zug beenden";
-
-playground = document.querySelector(".playingGround");
+﻿playground = document.querySelector(".playingGround");
 
 function onDragStart(event) {
     event.dataTransfer.setData('text/plain', event.target.id);
@@ -24,14 +17,15 @@ function onDrop(event) {
     dropzone.appendChild(draggableElement);
     event.dataTransfer.clearData();
     if (draggedElementParent.classList.contains("turn")) {
-        playground.insertBefore(ownButton, draggedElementParent);
+        ownButton = draggedElementParent.querySelector(".turnOver");
+        draggedElementParent.querySelector(".turnOver").classList.add("active");
         ownButton.addEventListener("click", function () {
-        document.querySelector(".turn").classList.remove("turn");
-        document.querySelector(".noTurn").classList.remove("noTurn");
-        ownButton.remove();
+            document.querySelector(".turn").classList.remove("turn");
+            document.querySelector(".noTurn").classList.remove("noTurn");
+            draggedElementParent.querySelector(".turnOver").classList.remove("active");
         })
     } else {
-        playground.insertBefore(opponentButton, draggedElementParent);
+        draggedElementParent.querySelector(".startEvaluation").classList.add("active");
     }
 
 }

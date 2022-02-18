@@ -89,6 +89,25 @@ form button[type="submit"]:hover {
 	transform-origin: bottom left;
 	/*background-image: url(Karten/blaue10.png);*/
 }
+.playingGround .ownCardDeck .turnOver {
+	opacity: 0;
+	visibility: hidden;
+	transition: all .4s ease-out;
+}
+.playingGround .ownCardDeck .turnOver.active {
+	opacity: 1;
+	visibility: visible;
+}
+.playingGround .opponentsCardDeck .startEvaluation {
+	opacity: 0;
+	visibility: hidden;
+	transition: all .4s ease-out;
+}
+
+.playingGround .opponentsCardDeck .startEvaluation.active {
+	opacity: 1;
+	visibility: visible;
+}
 .playingGround .opponentsCardDeck .card:hover img, .playingGround .ownCardDeck .card:hover img {
 	transform: scale(1.5);
 }
@@ -107,11 +126,22 @@ form button[type="submit"]:hover {
 	top: 50%;
 	transform: translateY(-50%);
 }
-.playingGround .trumpDisplay .trumpColorWrap {
+.playingGround .trumpDisplay > div {
 	width: 50px;
 	height: 50px;
 	display: block;
+}
+.playingGround .trumpDisplay > div.rot {
 	background-color: #ff0000;
+}
+.playingGround .trumpDisplay > div.gelb {
+	background-color: #ffff00;
+}
+.playingGround .trumpDisplay > div.gruen {
+	background-color: #3faf50;
+}
+.playingGround .trumpDisplay > div.blau {
+	background-color: #0000ff;
 }
 .playingGround .pointBoard {
 	position: absolute;
