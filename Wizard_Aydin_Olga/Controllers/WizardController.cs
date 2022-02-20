@@ -31,6 +31,8 @@ namespace Wizard_Aydin_Olga.Controllers
             TeilnehmerListe.Add(wizardModel.SpielerName1);
             TeilnehmerListe.Add(wizardModel.SpielerName2);
 
+            wizardModel.Runde = aktuelleRunde;
+
             if (wizardModel.SpielerName1 == null)
             {
                 wizardModel.SpielerName1 = "Spieler 1";
@@ -53,11 +55,26 @@ namespace Wizard_Aydin_Olga.Controllers
             return View("GameView", wizardModel);
         }
 
+        [HttpPost]
         public ActionResult GameView(WizardModel wizardModel)
         {
             int kartenImDeck = 60;
 
+            aktuelleRunde++;
+
+            PunkteAuswertung(wizardModel);
+
             KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
+
+            return View(wizardModel);
+        }
+
+        [HttpPost]
+        public ActionResult GameAuswertungView(WizardModel wizardModel)
+        {
+            aktuelleRunde++;
+
+            PunkteAuswertung(wizardModel);
 
             return View(wizardModel);
         }
@@ -110,13 +127,14 @@ namespace Wizard_Aydin_Olga.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult AuswertungStich(WizardModel wizardModel)
         {
             aktuelleRunde++;
 
             PunkteAuswertung(wizardModel);
 
-            return View();
+            return View(wizardModel);
         }
 
         public ActionResult PunkteAuswertung(WizardModel wizardModel)

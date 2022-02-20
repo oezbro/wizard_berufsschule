@@ -27,5 +27,14 @@ function onDrop(event) {
     } else {
         draggedElementParent.querySelector(".startEvaluation").classList.add("active");
     }
-
 }
+
+$("#startEvaluation").click(function () {
+    $.ajax({
+        type: "POST",
+        data: JSON.stringify(model),
+        url: url,
+        contentType: "application/json"
+    }).done(function (res) {
+    });
+});

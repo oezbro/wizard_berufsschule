@@ -1,9 +1,11 @@
 ﻿@model Wizard_Aydin_Olga.Models.WizardModel
-@using (Html.BeginForm("GameView", "Wizard", FormMethod.Get))
+@using (Html.BeginForm("GameView", "Wizard", FormMethod.Post))
 {
     <div class="playingGround">
         <div class="opponentsCardDeck noTurn">
-            <div class="startEvaluation">Auswertung starten</div>
+            <div class="startEvaluation">
+                <input id="startEvaluation" type="submit" value="Auswertung starten" />
+            </div>
             <div class="card" data-color="blue" data-value="8" data-beatable="9" draggable="true" ondragstart="onDragStart(event);">
                 <img src="../Content/Karten/blaue8.png" />
             </div>
