@@ -33,16 +33,6 @@ namespace Wizard_Aydin_Olga.Controllers
 
             model.Runde = aktuelleRunde;
 
-            if (model.SpielerName == null && wizardModel.wizardModels == null)
-            {
-                model.SpielerName = "Spieler 1";
-            }
-
-            if (model.SpielerName == null && wizardModel.wizardModels != null)
-            {
-                model.SpielerName = "Spieler 2";
-            }
-
             int kartenImDeck = 60;
 
             for (int i = 0; i < anzahlSpieler; i++)
@@ -61,6 +51,17 @@ namespace Wizard_Aydin_Olga.Controllers
                     wizardModel.wizardModels.Add(model);
                 }
             }
+
+            if (wizardModel.wizardModels[0].SpielerName == null)
+            {
+                wizardModel.wizardModels[0].SpielerName = "Spieler 1";
+            }
+
+            if (wizardModel.wizardModels[1].SpielerName == null)
+            {
+                wizardModel.wizardModels[1].SpielerName = "Spieler 2";
+            }
+
 
             return View("GameView", wizardModel);
         }
