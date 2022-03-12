@@ -12,8 +12,7 @@ namespace Wizard_Aydin_Olga.Models
         public int SpielerAnzahl { get; set; }
         public int Punkte { get; set; }
         public int KartenWert { get; set; }
-        public string SpielerName1 { get; set; }
-        public string SpielerName2 { get; set; }
+        public string SpielerName { get; set; }
         public string KartenFarbe { get; set; }
         public bool IstWizard { get; set; }
         public bool IstNarr { get; set; }
@@ -22,5 +21,6 @@ namespace Wizard_Aydin_Olga.Models
         public List<int> KartenAufDerHand { get; set; }
         public bool SticheRichtigAngesagt { get; set; }
         public string Trumpf { get; set; }
+        public List<WizardModel> wizardModels { get; set; }
     }
 }

@@ -18,11 +18,11 @@
         <div class="nameBox">
             <div class="firstPlayerInput">
                 <label for="SpielerName1">Spielername 1</label>
-                @Html.TextBoxFor(model => model.SpielerName1)
+                @Html.TextBoxFor(model => model.wizardModels[0].SpielerName)
             </div>
             <div class="secondPlayerInput">
                 <label for="SpielerName2">Spielername 2</label>
-                @Html.TextBoxFor(model => model.SpielerName2)
+                @Html.TextBoxFor(model => model.wizardModels[1].SpielerName)
             </div>
             <button type="submit">Spiel starten</button>
         </div>

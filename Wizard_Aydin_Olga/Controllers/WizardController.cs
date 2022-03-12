@@ -14,33 +14,33 @@ namespace Wizard_Aydin_Olga.Controllers
         public static int anzahlSpieler;
         public static int aktuelleRunde;
 
+        public static WizardModel wizardModel;
+
         public List<int> KartenAufDerHand =new List<int>();
 
         public ActionResult StartView()
         {
+            wizardModel = new WizardModel();
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult StartView(WizardModel wizardModel)
+        public ActionResult StartView(WizardModel model)
         {
             aktuelleRunde = 1;
             anzahlSpieler = 2;
 
-            List<string> TeilnehmerListe = new List<string>();
-            TeilnehmerListe.Add(wizardModel.SpielerName1);
-            TeilnehmerListe.Add(wizardModel.SpielerName2);
+            model.Runde = aktuelleRunde;
 
-            wizardModel.Runde = aktuelleRunde;
-
-            if (wizardModel.SpielerName1 == null)
+            if (model.SpielerName == null && wizardModel.wizardModels == null)
             {
-                wizardModel.SpielerName1 = "Spieler 1";
+                model.SpielerName = "Spieler 1";
             }
 
-            if (wizardModel.SpielerName2 == null)
+            if (model.SpielerName == null && wizardModel.wizardModels != null)
             {
-                wizardModel.SpielerName2 = "Spieler 2";
+                model.SpielerName = "Spieler 2";
             }
 
             int kartenImDeck = 60;
@@ -50,13 +50,23 @@ namespace Wizard_Aydin_Olga.Controllers
                 KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
             }
 
-            wizardModel.Trumpf = TrumpfBestimmen();
+            model.Trumpf = TrumpfBestimmen();
+
+            wizardModel = model;
+
+            for (int i = 0; i < anzahlSpieler; i++)
+            {
+                if (wizardModel.wizardModels == null)
+                {
+                    wizardModel.wizardModels.Add(model);
+                }
+            }
 
             return View("GameView", wizardModel);
         }
 
         [HttpPost]
-        public ActionResult GameView(WizardModel wizardModel)
+        public ActionResult GameView()
         {
             int kartenImDeck = 60;
 
