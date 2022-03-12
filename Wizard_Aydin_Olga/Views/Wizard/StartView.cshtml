@@ -7,26 +7,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-    <h1>Willkommen, anstrebende Zauberer!</h1>
-    <p>Möchtet Ihr Eure Sinne erweitern?</p>
-    <p>Möchtest du und dein Freund gemeinsam die Herausforderung bestreiten,<br /> eure Gabe der Vorhersehung zu entwickeln und zu festigen?</p>
-    <p>Dann gebt euren Namen ein und drückt auf den Knopf!</p>
+<body class="startView">
+    <div class="startText">
+        <h1>Willkommen, anstrebende Zauberer!</h1>
+        <p>Möchtet Ihr Eure Sinne erweitern?</p>
+        <p>Möchtest du und dein Freund gemeinsam die Herausforderung bestreiten,<br /> eure Gabe der Vorhersehung zu entwickeln und zu festigen?</p>
+        <p>Dann gebt euren Namen ein und drückt auf den Knopf!</p>
 
-    @using (Html.BeginForm("StartView", "Wizard", FormMethod.Post))
-    {
-        <div class="nameBox">
-            <div class="firstPlayerInput">
-                <label for="SpielerName1">Spielername 1</label>
-                @Html.TextBoxFor(model => model.wizardModels[0].SpielerName)
+        @using (Html.BeginForm("StartView", "Wizard", FormMethod.Post))
+        {
+            <div class="nameBox">
+                <div class="firstPlayerInput">
+                    <label for="SpielerName1">Spielername 1</label>
+                    @Html.TextBoxFor(model => model.wizardModels[0].SpielerName)
+                </div>
+                <div class="secondPlayerInput">
+                    <label for="SpielerName2">Spielername 2</label>
+                    @Html.TextBoxFor(model => model.wizardModels[1].SpielerName)
+                </div>
+                <button type="submit">Spiel starten</button>
             </div>
-            <div class="secondPlayerInput">
-                <label for="SpielerName2">Spielername 2</label>
-                @Html.TextBoxFor(model => model.wizardModels[1].SpielerName)
-            </div>
-            <button type="submit">Spiel starten</button>
-        </div>
-    }
+        }
+    </div>
 
 </body>
 </html>

@@ -1,9 +1,31 @@
-﻿h1 {
+﻿body {
+	background-image: url("Images/ingame.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+body.startView {
+	background-image: url("Images/start.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+body.startView h1, body.startView p, .firstPlayerInput label, .secondPlayerInput label {
+	color: #fff;
+	text-shadow: 1px 1px rgba(0,0,0,0.9);
+}
+
+body .startText {
+	position: relative;
+}
+
+h1 {
 	font-size: 50px;
 	line-height: 55px;
 	text-align: center;
 	font-family: 'Magic School Two';
 }
+
 p {
 	font-family: 'Magic School One';
 	font-size: 30px;
@@ -60,7 +82,7 @@ form button[type="submit"]:hover {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	height: 80px;
+	height: 130px;
 }
 
 .playingGround .card {
@@ -102,11 +124,13 @@ form button[type="submit"]:hover {
 	opacity: 0;
 	visibility: hidden;
 	transition: all .4s ease-out;
+	height: 0;
 }
 
 .playingGround .opponentsCardDeck .startEvaluation.active {
 	opacity: 1;
 	visibility: visible;
+	height: 100%;
 }
 .playingGround .opponentsCardDeck .card:hover img, .playingGround .ownCardDeck .card:hover img {
 	transform: scale(1.5);
@@ -125,6 +149,9 @@ form button[type="submit"]:hover {
 	right: 100px;
 	top: 50%;
 	transform: translateY(-50%);
+}
+.playingGround .trumpDisplay p {
+	color: #fff;
 }
 .playingGround .trumpDisplay > div {
 	width: 50px;
@@ -155,6 +182,10 @@ form button[type="submit"]:hover {
 }
 .playingGround .pointBoard .row {
 	display: flex;
+	background-color: rgba(74,74,74,0.5);
+} 
+.playingGround .pointBoard p {
+	color: #fff;
 } 
 .playingGround .pointBoard .row > div {
 	padding-left: 15px;
