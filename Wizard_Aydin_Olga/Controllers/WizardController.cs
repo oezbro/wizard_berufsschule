@@ -16,8 +16,6 @@ namespace Wizard_Aydin_Olga.Controllers
 
         public static WizardModel wizardModel;
 
-        public List<int> KartenAufDerHand = new List<int>();
-
         public ActionResult StartView()
         {
             wizardModel = new WizardModel();
@@ -98,22 +96,43 @@ namespace Wizard_Aydin_Olga.Controllers
             var rand = new Random();
             List<int> listNumbers = new List<int>();
             int number;
+
+            List<Tuple<int, string>> kartenListe = new List<Tuple<int, string>>();
+
             for (int i = 0; i < aktuelleRunde; i++)
             {
                 do
                 {
-                    number = rand.Next(1, kartenImDeck);
+                    number = rand.Next(1, 15);
                 } while (listNumbers.Contains(number));
                 listNumbers.Add(number);
 
-                KartenWert(number);
+                wizardModel.KartenWert = number;
+
+                string[] farben = { "rot", "blau", "gruen", "gelb" };
+
+                int index = rand.Next(farben.Length);
+
+                wizardModel.KartenFarbe = farben[index];
+
+                kartenListe.Add(new Tuple<int, string>(wizardModel.KartenWert, wizardModel.KartenFarbe));
+
+                wizardModel.KartenAufDerHand = kartenListe;
 
                 kartenImDeck--;
+
+                if(number == 14)
+                {
+                    wizardModel.IstNarr = true;
+                }
+                if (number == 15)
+                {
+                    wizardModel.IstWizard = true;
+                }
+
             }
 
-            wizardModel.KartenAufDerHand = listNumbers;
-
-            return View(wizardModel);
+            return View();
         }
 
         public string TrumpfBestimmen()
@@ -149,60 +168,12 @@ namespace Wizard_Aydin_Olga.Controllers
 
         public ActionResult PunkteAuswertung(WizardModel wizardModel)
         {
-            //aktuelleRunde++;
             if (wizardModel.SticheRichtigAngesagt)
             {
 
             }
 
             return View();
-        }
-
-        public WizardModel KartenWert(int rndNumber)
-        {
-            string[] farben = { "rot", "blau", "gruen", "gelb" };
-            Random rand = new Random();
-
-            int index = rand.Next(farben.Length);
-
-            string trumpf = farben[index];
-
-            if (rndNumber <= 13)
-            {
-                wizardModel.KartenWert = rndNumber;
-                wizardModel.KartenFarbe = "rot";
-            }
-            if (rndNumber > 14 && rndNumber <= 26)
-            {
-                wizardModel.KartenWert = rndNumber / 2;
-                wizardModel.KartenFarbe = "gruen";
-            }
-            if (rndNumber > 27 && rndNumber <= 39)
-            {
-                wizardModel.KartenWert = rndNumber / 3;
-                wizardModel.KartenFarbe = "gelb";
-            }
-            if (rndNumber > 40 && rndNumber <= 52)
-            {
-                wizardModel.KartenWert = rndNumber / 4;
-                wizardModel.KartenFarbe = "blau";
-            }
-            if (rndNumber > 53 && rndNumber <= 56)
-            {
-                wizardModel.KartenWert = rndNumber / 5;
-                wizardModel.IstNarr = true;
-            }
-            if (rndNumber > 57 && rndNumber <= 60)
-            {
-                wizardModel.KartenWert = rndNumber / 6;
-                wizardModel.IstWizard = true;
-            }
-
-            KartenAufDerHand.Add(rndNumber);
-
-            wizardModel.KartenAufDerHand = KartenAufDerHand;
-
-            return wizardModel;
         }
     }
 }
