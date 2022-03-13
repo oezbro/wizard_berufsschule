@@ -16,7 +16,7 @@ namespace Wizard_Aydin_Olga.Controllers
 
         public static WizardModel wizardModel;
 
-        public List<int> KartenAufDerHand =new List<int>();
+        public List<int> KartenAufDerHand = new List<int>();
 
         public ActionResult StartView()
         {
@@ -34,11 +34,6 @@ namespace Wizard_Aydin_Olga.Controllers
             model.Runde = aktuelleRunde;
 
             int kartenImDeck = 60;
-
-            for (int i = 0; i < anzahlSpieler; i++)
-            {
-                KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
-            }
 
             model.Trumpf = TrumpfBestimmen();
 
@@ -62,6 +57,12 @@ namespace Wizard_Aydin_Olga.Controllers
                 wizardModel.wizardModels[1].SpielerName = "Spieler 2";
             }
 
+            for (int i = 0; i < wizardModel.wizardModels.Count(); i++)
+            {
+                KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
+
+                wizardModel.wizardModels[i] = wizardModel;
+            }
 
             return View("GameView", wizardModel);
         }
@@ -94,8 +95,6 @@ namespace Wizard_Aydin_Olga.Controllers
         {
             kartenImDeck = 60;
 
-            WizardModel wizardModel = new WizardModel();
-
             var rand = new Random();
             List<int> listNumbers = new List<int>();
             int number;
@@ -107,7 +106,7 @@ namespace Wizard_Aydin_Olga.Controllers
                 } while (listNumbers.Contains(number));
                 listNumbers.Add(number);
 
-                KartenWert(number); 
+                KartenWert(number);
 
                 kartenImDeck--;
             }
@@ -150,7 +149,7 @@ namespace Wizard_Aydin_Olga.Controllers
 
         public ActionResult PunkteAuswertung(WizardModel wizardModel)
         {
-            aktuelleRunde++;
+            //aktuelleRunde++;
             if (wizardModel.SticheRichtigAngesagt)
             {
 
@@ -161,7 +160,12 @@ namespace Wizard_Aydin_Olga.Controllers
 
         public WizardModel KartenWert(int rndNumber)
         {
-            WizardModel wizardModel = new WizardModel();
+            string[] farben = { "rot", "blau", "gruen", "gelb" };
+            Random rand = new Random();
+
+            int index = rand.Next(farben.Length);
+
+            string trumpf = farben[index];
 
             if (rndNumber <= 13)
             {
@@ -171,7 +175,7 @@ namespace Wizard_Aydin_Olga.Controllers
             if (rndNumber > 14 && rndNumber <= 26)
             {
                 wizardModel.KartenWert = rndNumber / 2;
-                wizardModel.KartenFarbe = "grün";
+                wizardModel.KartenFarbe = "gruen";
             }
             if (rndNumber > 27 && rndNumber <= 39)
             {
