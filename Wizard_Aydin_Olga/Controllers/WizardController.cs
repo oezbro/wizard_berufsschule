@@ -45,6 +45,13 @@ namespace Wizard_Aydin_Olga.Controllers
                 }
             }
 
+            for (int i = 0; i < wizardModel.wizardModels.Count(); i++)
+            {
+                KartenAusteilen(kartenImDeck, aktuelleRunde);
+
+                wizardModel.wizardModels[i] = wizardModel;
+            }
+
             if (wizardModel.wizardModels[0].SpielerName == null)
             {
                 wizardModel.wizardModels[0].SpielerName = "Spieler 1";
@@ -53,13 +60,6 @@ namespace Wizard_Aydin_Olga.Controllers
             if (wizardModel.wizardModels[1].SpielerName == null)
             {
                 wizardModel.wizardModels[1].SpielerName = "Spieler 2";
-            }
-
-            for (int i = 0; i < wizardModel.wizardModels.Count(); i++)
-            {
-                KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
-
-                wizardModel.wizardModels[i] = wizardModel;
             }
 
             return View("GameView", wizardModel);
@@ -74,7 +74,7 @@ namespace Wizard_Aydin_Olga.Controllers
 
             PunkteAuswertung(wizardModel);
 
-            KartenAusteilen(anzahlSpieler, kartenImDeck, aktuelleRunde);
+            KartenAusteilen(kartenImDeck, aktuelleRunde);
 
             return View(wizardModel);
         }
@@ -89,7 +89,7 @@ namespace Wizard_Aydin_Olga.Controllers
             return View(wizardModel);
         }
 
-        public ActionResult KartenAusteilen(int anzahlSpieler, int kartenImDeck, int aktuelleRunde)
+        public void KartenAusteilen(int kartenImDeck, int aktuelleRunde)
         {
             kartenImDeck = 60;
 
@@ -121,7 +121,7 @@ namespace Wizard_Aydin_Olga.Controllers
 
                 kartenImDeck--;
 
-                if(number == 14)
+                if (number == 14)
                 {
                     wizardModel.IstNarr = true;
                 }
@@ -131,8 +131,6 @@ namespace Wizard_Aydin_Olga.Controllers
                 }
 
             }
-
-            return View();
         }
 
         public string TrumpfBestimmen()
