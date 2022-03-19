@@ -1,27 +1,52 @@
 ﻿@model Wizard_Aydin_Olga.Models.WizardModel
 @using (Html.BeginForm("GameView", "Wizard", FormMethod.Post))
 {
+
+    <div class="lightboxTricksOuter">
+        <div class="lightboxTricksInner">
+            <p>Wie viele Stiche <br/> machst du?</p>
+            <div class="trickamountContainer">
+                <div class="trick">
+                    <input id="0" type="radio" name="tricks" value="0" />
+                    <label for="0">0</label>
+                </div>
+                <div class="trick">
+                    <input id="1" type="radio" name="tricks" value="2" />
+                    <label for="1">1</label>
+                </div>
+                <div class="trick">
+                    <input id="2" type="radio" name="tricks" value="3" />
+                    <label for="2">2</label>
+                </div>
+            </div>
+            <button class="confirmationTricks">Bestätigen</button>
+        </div>
+    </div>
     <div class="playingGround">
         <div class="opponentsCardDeck noTurn">
             <div class="startEvaluation">
                 <input id="startEvaluation" type="submit" value="Auswertung starten" />
             </div>
-            @foreach (var kartenListe in Model.wizardModels[0].KartenAufDerHand)
-            {
-                <div class="card" data-color="@Model.wizardModels[0].KartenFarbe" data-value="@Model.wizardModels[0].KartenWert" data-beatable="9" draggable="true" ondragstart="onDragStart(event);">
-                    <img src="../Content/Karten/blaue8.png" />
-                </div>
-            }
+            <div class="opponentCardWrapper">
+                @foreach (var kartenListe in Model.wizardModels[0].KartenAufDerHand)
+                {
+                    <div class="card" data-color="@Model.wizardModels[0].KartenFarbe" data-value="@Model.wizardModels[0].KartenWert" data-beatable="9" draggable="true" ondragstart="onDragStart(event);">
+                        <img src="../Content/Karten/blaue8.png" />
+                    </div>
+                }
+            </div>
         </div>
         <div id="playingBoard" class="playingBoard" ondragover="onDragOver(event);" ondrop="onDrop(event);"></div>
         <div class="ownCardDeck turn">
             <div class="turnOver">Zug beenden</div>
-            @foreach (var kartenListe in Model.wizardModels[1].KartenAufDerHand)
-            {
-                <div class="card" data-color="@Model.wizardModels[1].KartenFarbe" data-value="@Model.wizardModels[1].KartenWert" data-beatable="11" draggable="true" ondragstart="onDragStart(event);">
-                    <img src="../Content/Karten/blaue10.png" />
-                </div>
-            }
+            <div class="ownCardWrapper">
+                @foreach (var kartenListe in Model.wizardModels[1].KartenAufDerHand)
+                {
+                    <div class="card" data-color="@Model.wizardModels[1].KartenFarbe" data-value="@Model.wizardModels[1].KartenWert" data-beatable="11" draggable="true" ondragstart="onDragStart(event);">
+                        <img src="../Content/Karten/blaue10.png" />
+                    </div>
+                }
+            </div>
         </div>
 
         <div class="trumpDisplay">
