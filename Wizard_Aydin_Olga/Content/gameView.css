@@ -42,6 +42,7 @@ body .startText {
 	transform: translate(-50%, -50%);
 	padding: 20px;
 	text-align: center;
+	margin-top: 10px;
 }
 
 .lightboxTricksOuter p {
@@ -51,15 +52,15 @@ body .startText {
 .lightboxTricksOuter .trickamountContainer {
 	display: flex;
 	justify-content: center;
-	margin-left: -10px;
-	margin-right: -10px;
+	margin-left: -5px;
+	margin-right: -5px;
 	margin-bottom: 20px;
 }
 
 .lightboxTricksOuter .trickamountContainer .trick {
 	position: relative;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .lightboxTricksOuter .trickamountContainer .trick label {
@@ -74,8 +75,8 @@ body .startText {
 }
 
 .lightboxTricksOuter .trickamountContainer .trick input {
-	width: 50px;
-	height: 65px;
+	width: 40px;
+	height: 55px;
 	border-radius: 0;
 	appearance: none;
 	-webkit-appearance: none;
@@ -87,11 +88,11 @@ body .startText {
 }
 
 .lightboxTricksOuter .trickamountContainer .trick input:checked {
-	border: 1px solid #7F007F;
+	border: 1px solid #9466a9;
 }
 
-.lightboxTricksOuter .trickamountContainer .trick input:checked +  label {
-	color: #7F007F;
+.lightboxTricksOuter .trickamountContainer .trick input:checked + label {
+	color: #9466a9;
 }
 
 .lightboxTricksOuter .confirmationTricks {
@@ -328,6 +329,23 @@ form button[type="submit"]:hover {
 	background-image: url("Images/playingboard.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
+	padding: 40px;
+	position: relative;
+}
+
+.playingGround .playingBoard .card {
+	position: absolute;
+	top: 55px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.playingGround .playingBoard .card:first-of-type {
+	position: absolute;
+	top: auto;
+	bottom: 55px;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .playingGround .trumpDisplay {
@@ -387,17 +405,24 @@ form button[type="submit"]:hover {
 
 .playingGround .pointBoard .row {
 	display: flex;
-	background-color: rgba(74,74,74,0.5);
+	background-color: rgba(148,102,169,0.5);
 } 
 
 .playingGround .pointBoard p {
 	color: #fff;
-} 
+}
 
 .playingGround .pointBoard .row > div {
-	padding-left: 15px;
-	padding-right: 15px;
-	border: 1px solid #000;
+	/*padding-left: 15px;*/
+	/*padding-right: 15px;*/
+	border: 1px solid #583D65;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.playingGround .pointBoard .row > div p {
+	margin: 0;
 }
 
 .playingGround .pointBoard .row > div:first-child {
