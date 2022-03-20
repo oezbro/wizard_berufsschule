@@ -19,6 +19,20 @@ body .startText {
 	position: relative;
 }
 
+.lightboxEvaluation {
+	position: fixed;
+	bottom: 25px;
+	left: 25px;
+	padding: 25px;
+	background-color: white;
+	z-index: 3;
+	transition: all .4s ease-out;
+}
+
+.lightboxEvaluation p {
+	margin-bottom: 0;
+}
+
 .lightboxTricksOuter {
 	position: absolute;
 	top: 50%;
@@ -30,11 +44,16 @@ body .startText {
 	text-align: center;
 }
 
+.lightboxTricksOuter p {
+	color: #fff;
+}
+
 .lightboxTricksOuter .trickamountContainer {
 	display: flex;
 	justify-content: center;
 	margin-left: -10px;
 	margin-right: -10px;
+	margin-bottom: 20px;
 }
 
 .lightboxTricksOuter .trickamountContainer .trick {
@@ -51,6 +70,7 @@ body .startText {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	color: #fff;
 }
 
 .lightboxTricksOuter .trickamountContainer .trick input {
@@ -59,7 +79,7 @@ body .startText {
 	border-radius: 0;
 	appearance: none;
 	-webkit-appearance: none;
-	border: 1px solid #000;
+	border: 1px solid #fff;
 }
 
 .lightboxTricksOuter .trickamountContainer .trick input:focus {
@@ -79,9 +99,51 @@ body .startText {
 	appearance: none;
 	/*font-family: 'Magic School Two';*/
 	font-family: 'Fontdinerdotcom Jazz Dark';
-	font-size: 24px;
+	font-size: 0;
 	border: none;
 	background-color: transparent;
+	position: relative;
+	padding-right: 50px;
+}
+
+.lightboxTricksOuter .confirmationTricks::before {
+	content: '';
+	display: block;
+	width: 50px;
+	height: 50px;
+	background-image: url("Icons/playbutton.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: all .4s ease-out;
+}
+
+.lightboxTricksOuter .confirmationTricks::after {
+	content: '';
+	display: block;
+	width: 50px;
+	height: 50px;
+	background-image: url("Icons/playbuttonhover.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	opacity: 0;
+	transition: all .4s ease-out;
+}
+
+.lightboxTricksOuter .confirmationTricks:hover::before {
+	opacity: 0;
+}
+
+
+.lightboxTricksOuter .confirmationTricks:hover::after {
+	opacity: 1;
 }
 
 h1 {
@@ -123,6 +185,25 @@ form .secondPlayerInput {
 	margin-top: 20px;
 }
 
+form .firstPlayerInput label, form .secondPlayerInput label {
+	font-family: 'Fontdinerdotcom Jazz Dark';
+	margin-right: 5px;
+}
+
+form .firstPlayerInput input, form .secondPlayerInput input {
+	appearance: none;
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid #fff;
+	outline: none;
+	color: #fff;
+	font-family: 'Fontdinerdotcom Jazz Dark';
+}
+
+form .firstPlayerInput input:focus, form .secondPlayerInput input:focus {
+	outline: none;
+}
+
 form button[type="submit"] {
 	margin-top: 20px;
 	width: 50px;
@@ -136,7 +217,7 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-	background-image: url("Icons/playbuttonHover.png");
+	background-image: url("Icons/playbuttonhover.png");
 }
 
 .playingGround {
@@ -169,38 +250,69 @@ form button[type="submit"]:hover {
 	transition: all .4s ease-out;
 	pointer-events: none;
 }
+
 .playingGround .opponentsCardDeck .card img {
 	transform-origin: top left;
 }
+
 .playingGround .opponentsCardDeck .card {
 	pointer-events: all;
 }
+
 .playingGround .opponentsCardDeck.noTurn .card {
 	pointer-events: none;
 }
+
 .playingGround .ownCardDeck .card img {
 	transform-origin: bottom left;
 }
+
 .playingGround .ownCardDeck .turnOver {
 	opacity: 0;
 	visibility: hidden;
 	transition: all .4s ease-out;
+	color: #fff;
+	font-family: 'Fontdinerdotcom Jazz Dark';
+	position: absolute;
+	top: 100px;
+	right: 100px;
+	z-index: 5;
+	cursor: pointer;
+	font-size: 24px;
 }
+
 .playingGround .ownCardDeck .turnOver.active {
 	opacity: 1;
 	visibility: visible;
 }
+
+.playingGround .ownCardDeck {
+	pointer-events: none;
+}
+
 .playingGround .opponentsCardDeck .startEvaluation {
 	opacity: 0;
 	visibility: hidden;
 	transition: all .4s ease-out;
-	height: 0;
+	font-family: 'Fontdinerdotcom Jazz Dark';
+	color: #fff;
+	position: absolute;
+	top: 100px;
+	right: 100px;
+	z-index: 5;
+}
+
+.playingGround .opponentsCardDeck .startEvaluation input {
+	appearance: none;
+	-webkit-appearance: none;
+	border: none;
+	background-color: transparent;
+	font-size: 24px;
 }
 
 .playingGround .opponentsCardDeck .startEvaluation.active {
 	opacity: 1;
 	visibility: visible;
-	height: 100%;
 }
 .playingGround .opponentsCardDeck .card:hover img, .playingGround .ownCardDeck .card:hover img {
 	transform: scale(1.5);
@@ -210,9 +322,12 @@ form button[type="submit"]:hover {
 	width: 300px;
 	height: 300px;
 	display: block;
-	background-color: #cccccc;
+	/*background-color: #cccccc;*/
 	margin-left: auto;
 	margin-right: auto;
+	background-image: url("Images/playingboard.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
 .playingGround .trumpDisplay {
@@ -234,26 +349,31 @@ form button[type="submit"]:hover {
 	height: 50px;
 	display: block;
 }
+
 .playingGround .trumpDisplay > div.rot {
 	background-image: url("Icons/trumpred.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 }
+
 .playingGround .trumpDisplay > div.gelb {
 	background-image: url("Icons/trumpyellow.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 }
+
 .playingGround .trumpDisplay > div.gruen {
 	background-image: url("Icons/trumpgreen.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 }
+
 .playingGround .trumpDisplay > div.blau {
 	background-image: url("Icons/trumpblue.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 }
+
 .playingGround .pointBoard {
 	position: absolute;
 	left: 50px;
@@ -264,18 +384,22 @@ form button[type="submit"]:hover {
 	max-width: 300px;
 	width: 100%;
 }
+
 .playingGround .pointBoard .row {
 	display: flex;
 	background-color: rgba(74,74,74,0.5);
 } 
+
 .playingGround .pointBoard p {
 	color: #fff;
 } 
+
 .playingGround .pointBoard .row > div {
 	padding-left: 15px;
 	padding-right: 15px;
 	border: 1px solid #000;
 }
+
 .playingGround .pointBoard .row > div:first-child {
 	flex-basis: 40px;
 	max-width: 40px;
