@@ -10,17 +10,28 @@ namespace Wizard_Aydin_Olga.Models
     public class WizardModel : Controller
     {
         public int SpielerAnzahl { get; set; }
-        public int Punkte { get; set; }
-        public int KartenWert { get; set; }
-        public string SpielerName { get; set; }
-        public string KartenFarbe { get; set; }
-        public bool IstWizard { get; set; }
-        public bool IstNarr { get; set; }
         public int AnzahlStiche { get; set; }
         public int Runde { get; set; }
-        public List<Tuple<int, string>> KartenAufDerHand { get; set; }
         public bool SticheRichtigAngesagt { get; set; }
         public string Trumpf { get; set; }
-        public List<WizardModel> wizardModels { get; set; }
+
+        public class Karten 
+        {
+            public string KartenFarbe { get; set; }
+            public int KartenWert { get; set; }
+            public bool IstWizard { get; set; }
+            public bool IstNarr { get; set; }
+            public string BildPfad { get; set; }
+        }
+
+        public class Spieler 
+        {
+            public int Punkte { get; set; }
+            public string SpielerName { get; set; }
+            public List<Karten> KartenListe { get; set; }
+
+        }
+
+        public List<Spieler> SpielerListe { get; set; }
     }
 }
