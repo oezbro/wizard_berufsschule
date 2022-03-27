@@ -4,24 +4,16 @@
 
     <div class="lightboxTricksOuter">
         <div class="lightboxTricksInner">
-            <p>Wie viele Stiche <br/> machst du?</p>
+            <p>Wie viele Stiche <br /> machst du?</p>
             <div class="trickamountContainer">
-                <div class="trick">
-                    <input id="0" type="radio" name="tricks" value="0" />
-                    <label for="0">0</label>
-                </div>
-                <div class="trick">
-                    <input id="1" type="radio" name="tricks" value="1" />
-                    <label for="1">1</label>
-                </div>
-                <div class="trick">
-                    <input id="2" type="radio" name="tricks" value="2" />
-                    <label for="2">2</label>
-                </div>
-                <div class="trick">
-                    <input id="3" type="radio" name="tricks" value="3" />
-                    <label for="3">3</label>
-                </div>
+                @*thisss in Javascript plllsssss Senpaaaaiiiiii uwu ara ara*@
+                @for (int i = 0; i <= Model.Runde; i++)
+                {
+                    <div class="trick">
+                        <input id="0" type="radio" name="tricks" value="0" />
+                        <label for="0">0</label>
+                    </div>
+                }
             </div>
             <button class="confirmationTricks">Bestätigen</button>
         </div>
@@ -40,7 +32,7 @@
                 @foreach (var karte in Model.SpielerListe[0].KartenListe)
                 {
                     <div class="card" data-color="@Model.SpielerListe[0].KartenListe[0].KartenFarbe" data-value="@Model.SpielerListe[0].KartenListe[0].KartenWert" data-beatable="9" draggable="true" ondragstart="onDragStart(event);">
-                        <img src="../Content/Karten/@Model.SpielerListe[0].KartenListe[0].BildPfad"/>
+                        <img src="../Content/Karten/@Model.SpielerListe[0].KartenListe[0].BildPfad" />
                     </div>
                 }
             </div>
@@ -51,8 +43,8 @@
             <div class="ownCardWrapper">
                 @foreach (var karte in Model.SpielerListe[1].KartenListe)
                 {
-                    <div class="card" data-color="@Model.SpielerListe[1].KartenListe[1].KartenFarbe" data-value="@Model.SpielerListe[1].KartenListe[1].KartenWert" data-beatable="11" draggable="true" ondragstart="onDragStart(event);">
-                        <img src="../Content/Karten/@Model.SpielerListe[1].KartenListe[1].BildPfad" />
+                    <div class="card" data-color="@Model.SpielerListe[1].KartenListe[0].KartenFarbe" data-value="@Model.SpielerListe[1].KartenListe[0].KartenWert" data-beatable="11" draggable="true" ondragstart="onDragStart(event);">
+                        <img src="../Content/Karten/@Model.SpielerListe[1].KartenListe[0].BildPfad" />
                     </div>
                 }
             </div>
@@ -68,13 +60,16 @@
                 <div class="playerOnePoints"><p>@Model.SpielerListe[0].SpielerName</p></div>
                 <div class="playerTwoPoints"><p>@Model.SpielerListe[1].SpielerName</p></div>
             </div>
-            <div class="row">
-                <div class="round"><p>1</p></div>
-                <div class="playerOnePoints"><p>&nbsp;</p></div>
-                <div class="playerOneTricks"><p>1</p></div>
-                <div class="playerTwoPoints"><p>&nbsp;</p></div>
-                <div class="playerTwoTricks"><p>0</p></div>
-            </div>
+            @for (int i = 0; i < Model.Runde; i++)
+            {
+                <div class="row">
+                    <div class="round"><p>1</p></div>
+                    <div class="playerOnePoints"><p>&nbsp;</p></div>
+                    <div class="playerOneTricks"><p>1</p></div>
+                    <div class="playerTwoPoints"><p>&nbsp;</p></div>
+                    <div class="playerTwoTricks"><p>0</p></div>
+                </div>
+            }
         </div>
     </div>
 }

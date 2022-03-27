@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Wizard_Aydin_Olga.Models;
 using Wizard_Aydin_Olga.Controllers;
+using System.Threading.Tasks;
 
 namespace Wizard_Aydin_Olga.Controllers
 {
@@ -14,12 +15,10 @@ namespace Wizard_Aydin_Olga.Controllers
         //public int anzahlSpieler;
         //public int aktuelleRunde;
 
-        //public WizardModel wizardModel;
+        public static WizardModel wizardModel;
 
         public ActionResult StartView()
         {
-            WizardModel wizardModel = new WizardModel();
-
             return View();
         }
 
@@ -29,62 +28,52 @@ namespace Wizard_Aydin_Olga.Controllers
             model.Runde = 1;
             model.SpielerAnzahl = 2;
 
-            WizardModel.Karten karten = new WizardModel.Karten();
-
-            WizardModel.Spieler spieler = new WizardModel.Spieler();
-
-            List<WizardModel.Karten> kartenAufDerHand = new List<WizardModel.Karten>();
-
-            //model.Runde = aktuelleRunde;
-
             int kartenImDeck = 60;
+
+            Random rand = new Random();
 
             model.Trumpf = TrumpfBestimmen();
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
-                model.SpielerListe.Add(spieler);
+                if (model.SpielerListe[i].SpielerName == null)
+                {
+                    int spielerZahl = i + 1;
 
-                if (model.SpielerListe[0].SpielerName == null)
-                {
-                    model.SpielerListe[0].SpielerName = "Spieler 1";
+                    model.SpielerListe[i].SpielerName = "Spieler " + spielerZahl;
                 }
-                if (model.SpielerListe[1].SpielerName == null)
-                {
-                    model.SpielerListe[1].SpielerName = "Spieler 2";
-                }
-                kartenAufDerHand.Add(KartenAusteilen(kartenImDeck, model.Runde));
+                List<WizardModel.Karten> kartenAufDerHand = new List<WizardModel.Karten>();
+
+                kartenAufDerHand.Add(KartenAusteilen(kartenImDeck, model, rand));
 
                 model.SpielerListe[i].KartenListe = kartenAufDerHand;
             }
 
-            //for (int i = 0; i < model.SpielerListe.Count; i++)
-            //{
-            //    kartenAufDerHand.Add(KartenAusteilen(kartenImDeck, aktuelleRunde));
+            wizardModel = model;
 
-            //    model.SpielerListe[i].KartenListe = kartenAufDerHand;
-            //}
-
-            return View("GameView", model);
+            return View("GameView", wizardModel);
         }
+
 
         [HttpPost]
         public ActionResult GameView(WizardModel model)
         {
+            model = wizardModel;
+
             int kartenImDeck = 60;
+
+            Random rand = new Random();
 
             model.Runde++;
 
-            //PunkteAuswertung(wizardModel);
-
-            //WizardModel.Karten karten = new WizardModel.Karten();
+            List<WizardModel.Karten> kartenListe = new List<WizardModel.Karten>();
 
             foreach (WizardModel.Spieler spieler in model.SpielerListe)
             {
-                KartenAusteilen(kartenImDeck, model.Runde);
+                spieler.KartenListe.Add(KartenAusteilen(kartenImDeck, model, rand));
             }
 
-            return View(model);
+            return View(wizardModel);
         }
 
         [HttpPost]
@@ -97,25 +86,18 @@ namespace Wizard_Aydin_Olga.Controllers
             return View(model);
         }
 
-        public WizardModel.Karten KartenAusteilen(int kartenImDeck, int aktuelleRunde)
+        public WizardModel.Karten KartenAusteilen(int kartenImDeck, WizardModel model, Random rand)
         {
             kartenImDeck = 60;
 
-            var rand = new Random();
             List<int> listNumbers = new List<int>();
             int number;
 
             WizardModel.Karten karten = new WizardModel.Karten();
 
-            //List<Tuple<int, string>> kartenListe = new List<Tuple<int, string>>();
-
-            for (int i = 0; i < aktuelleRunde; i++)
+            for (int i = 0; i < model.Runde; i++)
             {
-                //do
-                //{
                 number = rand.Next(1, 15);
-                //} while (listNumbers.Contains(number));
-                //listNumbers.Add(number);
 
                 karten.KartenWert = number;
 
@@ -124,8 +106,6 @@ namespace Wizard_Aydin_Olga.Controllers
                 int index = rand.Next(farben.Length);
 
                 karten.KartenFarbe = farben[index];
-
-                //kartenListe.Add(new Tuple<int, string>(karten.KartenWert, karten.KartenFarbe));
 
                 kartenImDeck--;
 
@@ -137,7 +117,6 @@ namespace Wizard_Aydin_Olga.Controllers
                 {
                     karten.IstWizard = true;
                 }
-                //wizardModel.KartenListe.Add(karten);
 
                 if (karten.IstNarr == true)
                 {
@@ -152,7 +131,6 @@ namespace Wizard_Aydin_Olga.Controllers
                     karten.BildPfad = karten.KartenFarbe + karten.KartenWert.ToString() + ".png";
                 }
             }
-
             return karten;
         }
 
