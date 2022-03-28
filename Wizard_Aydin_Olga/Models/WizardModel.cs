@@ -15,7 +15,7 @@ namespace Wizard_Aydin_Olga.Models
         public bool SticheRichtigAngesagt { get; set; }
         public string Trumpf { get; set; }
 
-        public class Karten
+        public class Karte
         {
             public string KartenFarbe { get; set; }
             public int KartenWert { get; set; }
@@ -28,7 +28,7 @@ namespace Wizard_Aydin_Olga.Models
         {
             public int Punkte { get; set; }
             public string SpielerName { get; set; }
-            public List<Karten> KartenListe { get; set; }
+            public List<Karte> KartenListe { get; set; }
         }
 
         public List<Spieler> SpielerListe { get; set; }

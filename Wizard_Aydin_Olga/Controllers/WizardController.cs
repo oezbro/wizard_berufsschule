@@ -28,11 +28,13 @@ namespace Wizard_Aydin_Olga.Controllers
             model.Runde = 1;
             model.SpielerAnzahl = 2;
 
-            int kartenImDeck = 60;
-
             Random rand = new Random();
 
             model.Trumpf = TrumpfBestimmen();
+
+            //List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
+
+            WizardModel.Spieler spieler = new WizardModel.Spieler();
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
@@ -42,16 +44,13 @@ namespace Wizard_Aydin_Olga.Controllers
 
                     model.SpielerListe[i].SpielerName = "Spieler " + spielerZahl;
                 }
-                List<WizardModel.Karten> kartenAufDerHand = new List<WizardModel.Karten>();
 
-                kartenAufDerHand.Add(KartenAusteilen(kartenImDeck, model, rand));
-
-                model.SpielerListe[i].KartenListe = kartenAufDerHand;
+                KartenAusteilen(model, rand, model.SpielerListe[i]);
             }
 
             wizardModel = model;
 
-            return View("GameView", wizardModel);
+            return View("GameView", model);
         }
 
 
@@ -66,14 +65,14 @@ namespace Wizard_Aydin_Olga.Controllers
 
             model.Runde++;
 
-            List<WizardModel.Karten> kartenListe = new List<WizardModel.Karten>();
+            List<WizardModel.Karte> kartenListe = new List<WizardModel.Karte>();
 
-            foreach (WizardModel.Spieler spieler in model.SpielerListe)
+            for (int i = 0; i < model.SpielerAnzahl; i++)
             {
-                spieler.KartenListe.Add(KartenAusteilen(kartenImDeck, model, rand));
+                KartenAusteilen(model, rand, model.SpielerListe[i]);
             }
 
-            return View(wizardModel);
+            return View(model);
         }
 
         [HttpPost]
@@ -86,52 +85,52 @@ namespace Wizard_Aydin_Olga.Controllers
             return View(model);
         }
 
-        public WizardModel.Karten KartenAusteilen(int kartenImDeck, WizardModel model, Random rand)
+        public void KartenAusteilen(WizardModel model, Random rand, WizardModel.Spieler spieler)
         {
-            kartenImDeck = 60;
-
-            List<int> listNumbers = new List<int>();
-            int number;
-
-            WizardModel.Karten karten = new WizardModel.Karten();
+            List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
 
             for (int i = 0; i < model.Runde; i++)
             {
+                int number;
+
+                WizardModel.Karte karte = new WizardModel.Karte();
+
                 number = rand.Next(1, 15);
 
-                karten.KartenWert = number;
+                karte.KartenWert = number;
 
                 string[] farben = { "rote", "blaue", "gruene", "gelbe" };
 
                 int index = rand.Next(farben.Length);
 
-                karten.KartenFarbe = farben[index];
-
-                kartenImDeck--;
+                karte.KartenFarbe = farben[index];
 
                 if (number == 14)
                 {
-                    karten.IstNarr = true;
+                    karte.IstNarr = true;
                 }
                 if (number == 15)
                 {
-                    karten.IstWizard = true;
+                    karte.IstWizard = true;
                 }
 
-                if (karten.IstNarr == true)
+                if (karte.IstNarr == true)
                 {
-                    karten.BildPfad = "narr1.png";
+                    karte.BildPfad = "narr1.png";
                 }
-                else if (karten.IstWizard == true)
+                else if (karte.IstWizard == true)
                 {
-                    karten.BildPfad = "zauberer1.png";
+                    karte.BildPfad = "zauberer1.png";
                 }
                 else
                 {
-                    karten.BildPfad = karten.KartenFarbe + karten.KartenWert.ToString() + ".png";
+                    karte.BildPfad = karte.KartenFarbe + karte.KartenWert.ToString() + ".png";
                 }
+
+                kartenAufDerHand.Add(karte);
             }
-            return karten;
+            spieler.KartenListe = kartenAufDerHand;
+            //return spieler.KartenListe;
         }
 
         public string TrumpfBestimmen()
