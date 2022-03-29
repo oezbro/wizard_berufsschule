@@ -11,15 +11,21 @@ namespace Wizard_Aydin_Olga.Controllers
 {
     public class WizardController : Controller
     {
-        //public int kartenImDeck;
-        //public int anzahlSpieler;
-        //public int aktuelleRunde;
-
         public static WizardModel wizardModel;
 
         public ActionResult StartView()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult SticheSetzen(WizardModel model)
+        {
+            wizardModel.AnzahlStiche = model.AnzahlStiche;
+
+            model = wizardModel;
+
+            return RedirectToAction("StartView", "Wizard", model);
         }
 
         [HttpPost]
@@ -32,9 +38,9 @@ namespace Wizard_Aydin_Olga.Controllers
 
             model.Trumpf = TrumpfBestimmen();
 
-            //List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
-
             WizardModel.Spieler spieler = new WizardModel.Spieler();
+
+            DeckMischen(model);
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
@@ -45,7 +51,16 @@ namespace Wizard_Aydin_Olga.Controllers
                     model.SpielerListe[i].SpielerName = "Spieler " + spielerZahl;
                 }
 
-                KartenAusteilen(model, rand, model.SpielerListe[i]);
+                List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
+
+                for (int r = 0; r < model.Runde; r++)
+                {
+                    kartenAufDerHand.Add(model.KartenDeck.FirstOrDefault());
+
+                    model.SpielerListe[i].KartenListe = kartenAufDerHand;
+
+                    model.KartenDeck.RemoveAt(0);
+                }
             }
 
             wizardModel = model;
@@ -53,13 +68,12 @@ namespace Wizard_Aydin_Olga.Controllers
             return View("GameView", model);
         }
 
-
         [HttpPost]
         public ActionResult GameView(WizardModel model)
         {
             model = wizardModel;
 
-            int kartenImDeck = 60;
+            DeckMischen(model);
 
             Random rand = new Random();
 
@@ -69,7 +83,16 @@ namespace Wizard_Aydin_Olga.Controllers
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
-                KartenAusteilen(model, rand, model.SpielerListe[i]);
+                List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
+
+                for (int r = 0; r < model.Runde; r++)
+                {
+                    kartenAufDerHand.Add(model.KartenDeck.FirstOrDefault());
+
+                    model.SpielerListe[i].KartenListe = kartenAufDerHand;
+
+                    model.KartenDeck.RemoveAt(0);
+                }
             }
 
             return View(model);
@@ -85,52 +108,78 @@ namespace Wizard_Aydin_Olga.Controllers
             return View(model);
         }
 
-        public void KartenAusteilen(WizardModel model, Random rand, WizardModel.Spieler spieler)
+        public void DeckMischen(WizardModel model)
         {
-            List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
+            Random rand = new Random();
 
-            for (int i = 0; i < model.Runde; i++)
+            List<WizardModel.Karte> kartenImDeck = new List<WizardModel.Karte>();
+
+            if (model.KartenDeck == null)
             {
-                int number;
+                kartenImDeck.Add(RandomKarte(model, rand));
+                model.KartenDeck = kartenImDeck;
+            }
 
+            for (int i = 0; model.KartenDeck.Count() < 56; i++)
+            {
                 WizardModel.Karte karte = new WizardModel.Karte();
 
-                number = rand.Next(1, 15);
+                karte = RandomKarte(model, rand);
 
-                karte.KartenWert = number;
-
-                string[] farben = { "rote", "blaue", "gruene", "gelbe" };
-
-                int index = rand.Next(farben.Length);
-
-                karte.KartenFarbe = farben[index];
-
-                if (number == 14)
+                if (kartenImDeck.Any(x => x.KartenFarbe == karte.KartenFarbe && x.KartenWert == karte.KartenWert))
                 {
-                    karte.IstNarr = true;
-                }
-                if (number == 15)
-                {
-                    karte.IstWizard = true;
-                }
-
-                if (karte.IstNarr == true)
-                {
-                    karte.BildPfad = "narr1.png";
-                }
-                else if (karte.IstWizard == true)
-                {
-                    karte.BildPfad = "zauberer1.png";
+                    kartenImDeck.Remove(karte);
                 }
                 else
                 {
-                    karte.BildPfad = karte.KartenFarbe + karte.KartenWert.ToString() + ".png";
+                    kartenImDeck.Add(karte);
                 }
-
-                kartenAufDerHand.Add(karte);
             }
-            spieler.KartenListe = kartenAufDerHand;
-            //return spieler.KartenListe;
+
+            model.KartenDeck = kartenImDeck;
+
+            wizardModel = model;
+        }
+
+        public WizardModel.Karte RandomKarte(WizardModel model, Random rand)
+        {
+            int number;
+
+            WizardModel.Karte karte = new WizardModel.Karte();
+
+            number = rand.Next(1, 15);
+
+            karte.KartenWert = number;
+
+            string[] farben = { "rote", "blaue", "gruene", "gelbe" };
+
+            int index = rand.Next(farben.Length);
+
+            karte.KartenFarbe = farben[index];
+
+            if (number == 14)
+            {
+                karte.IstNarr = true;
+            }
+            if (number == 15)
+            {
+                karte.IstWizard = true;
+            }
+
+            if (karte.IstNarr == true)
+            {
+                karte.BildPfad = "narr1.png";
+            }
+            else if (karte.IstWizard == true)
+            {
+                karte.BildPfad = "zauberer1.png";
+            }
+            else
+            {
+                karte.BildPfad = karte.KartenFarbe + karte.KartenWert.ToString() + ".png";
+            }
+
+            return karte;
         }
 
         public string TrumpfBestimmen()
