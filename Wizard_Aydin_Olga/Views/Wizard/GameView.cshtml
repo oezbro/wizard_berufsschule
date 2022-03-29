@@ -14,18 +14,21 @@
                     </div>
                 }
             </div>
-            <button class="confirmationTricks">Bestätigen</button>
+            <div class="confirmationTricks">Bestätigen</div>
         </div>
     </div>
     <div class="lightboxEvaluation">
         <div class="evaluationText">
-            <p>Spieler XY hat den Stich gemacht!</p>
+            <p></p>
         </div>
     </div>
-    <div class="playingGround">
+    <div class="playingGround" data-round="Model.Runde">
         <div class="opponentsCardDeck noTurn">
             <div class="startEvaluation">
-                <input id="startEvaluation" type="submit" value="Auswertung starten" />
+                <input id="startEvaluation" class="children" value="Auswertung starten" />
+            </div>
+            <div class="startEvaluationFinal">
+                <input id="startEvaluationFinal" type="submit" class="noChildren" value="Auswertung starten" />
             </div>
             <div class="opponentCardWrapper">
                 @foreach (var karte in Model.SpielerListe[0].KartenListe)
@@ -56,8 +59,8 @@
         <div class="pointBoard">
             <div class="firstRow row">
                 <div class="round">&nbsp;</div>
-                <div class="playerOnePoints"><p>@Model.SpielerListe[0].SpielerName</p></div>
-                <div class="playerTwoPoints"><p>@Model.SpielerListe[1].SpielerName</p></div>
+                <div class="playerOnePoints"><p class="playerOneName">@Model.SpielerListe[0].SpielerName</p></div>
+                <div class="playerTwoPoints"><p class="playerTwoName">@Model.SpielerListe[1].SpielerName</p></div>
             </div>
             @for (var i = 1; i <= Model.Runde; i++)
             {

@@ -27,6 +27,7 @@ body .startText {
 	background-color: white;
 	z-index: 3;
 	transition: all .4s ease-out;
+	opacity: 0;
 }
 
 .lightboxEvaluation p {
@@ -105,6 +106,11 @@ body .startText {
 	background-color: transparent;
 	position: relative;
 	padding-right: 50px;
+	display: block;
+	width: 50px;
+	height: 50px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .lightboxTricksOuter .confirmationTricks::before {
@@ -291,7 +297,7 @@ form button[type="submit"]:hover {
 	pointer-events: none;
 }
 
-.playingGround .opponentsCardDeck .startEvaluation {
+.playingGround .opponentsCardDeck .startEvaluation, .playingGround .opponentsCardDeck .startEvaluationFinal {
 	opacity: 0;
 	visibility: hidden;
 	transition: all .4s ease-out;
@@ -303,7 +309,7 @@ form button[type="submit"]:hover {
 	z-index: 5;
 }
 
-.playingGround .opponentsCardDeck .startEvaluation input {
+.playingGround .opponentsCardDeck .startEvaluation input, .playingGround .opponentsCardDeck .startEvaluationFinal input {
 	appearance: none;
 	-webkit-appearance: none;
 	border: none;
@@ -311,10 +317,15 @@ form button[type="submit"]:hover {
 	font-size: 24px;
 }
 
-.playingGround .opponentsCardDeck .startEvaluation.active {
+.playingGround .opponentsCardDeck .startEvaluation input:focus, .playingGround .opponentsCardDeck .startEvaluationFinal input:focus {
+	outline: none;
+}
+
+.playingGround .opponentsCardDeck .startEvaluation.active, .playingGround .opponentsCardDeck .startEvaluationFinal.active {
 	opacity: 1;
 	visibility: visible;
 }
+
 .playingGround .opponentsCardDeck .card:hover img, .playingGround .ownCardDeck .card:hover img {
 	transform: scale(1.5);
 }
