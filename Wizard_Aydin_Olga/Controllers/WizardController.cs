@@ -38,8 +38,6 @@ namespace Wizard_Aydin_Olga.Controllers
 
             model.Trumpf = TrumpfBestimmen();
 
-            WizardModel.Spieler spieler = new WizardModel.Spieler();
-
             DeckMischen(model);
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
@@ -73,13 +71,11 @@ namespace Wizard_Aydin_Olga.Controllers
         {
             model = wizardModel;
 
-            DeckMischen(model);
-
             Random rand = new Random();
 
             model.Runde++;
 
-            List<WizardModel.Karte> kartenListe = new List<WizardModel.Karte>();
+            DeckMischen(model);
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
@@ -94,7 +90,6 @@ namespace Wizard_Aydin_Olga.Controllers
                     model.KartenDeck.RemoveAt(0);
                 }
             }
-
             return View(model);
         }
 
@@ -120,7 +115,9 @@ namespace Wizard_Aydin_Olga.Controllers
                 model.KartenDeck = kartenImDeck;
             }
 
-            for (int i = 0; model.KartenDeck.Count() < 56; i++)
+            int s = 60 - (model.Runde * 4);
+
+            for (int i = 0; model.KartenDeck.Count() < s; i++)
             {
                 WizardModel.Karte karte = new WizardModel.Karte();
 
@@ -134,10 +131,8 @@ namespace Wizard_Aydin_Olga.Controllers
                 {
                     kartenImDeck.Add(karte);
                 }
+                model.KartenDeck = kartenImDeck;
             }
-
-            model.KartenDeck = kartenImDeck;
-
             wizardModel = model;
         }
 
@@ -160,18 +155,11 @@ namespace Wizard_Aydin_Olga.Controllers
             if (number == 14)
             {
                 karte.IstNarr = true;
-            }
-            if (number == 15)
-            {
-                karte.IstWizard = true;
-            }
-
-            if (karte.IstNarr == true)
-            {
                 karte.BildPfad = "narr1.png";
             }
-            else if (karte.IstWizard == true)
+            else if (number == 15)
             {
+                karte.IstWizard = true;
                 karte.BildPfad = "zauberer1.png";
             }
             else
