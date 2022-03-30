@@ -10,9 +10,7 @@ namespace Wizard_Aydin_Olga.Models
     public class WizardModel : Controller
     {
         public int SpielerAnzahl { get; set; }
-        public int AnzahlStiche { get; set; }
         public int Runde { get; set; }
-        public bool SticheRichtigAngesagt { get; set; }
         public string Trumpf { get; set; }
         public List<Karte> KartenDeck { get; set; }
         public List<Spieler> SpielerListe { get; set; }
@@ -28,9 +26,13 @@ namespace Wizard_Aydin_Olga.Models
 
         public class Spieler
         {
-            public int Punkte { get; set; }
+            public List<int> PunkteProRunde { get; set; }
+            public List<int> AngesagteSticheProRunde { get; set; }
             public string SpielerName { get; set; }
             public List<Karte> KartenListe { get; set; }
+            public int GemachteStiche { get; set; }
+            public int AngesagteStiche { get; set; }
+
         }
     }
 }

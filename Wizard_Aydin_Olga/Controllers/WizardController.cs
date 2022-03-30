@@ -18,15 +18,6 @@ namespace Wizard_Aydin_Olga.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult SticheSetzen(WizardModel model)
-        {
-            wizardModel.AnzahlStiche = model.AnzahlStiche;
-
-            model = wizardModel;
-
-            return RedirectToAction("StartView", "Wizard", model);
-        }
 
         [HttpPost]
         public ActionResult StartView(WizardModel model)
@@ -49,6 +40,8 @@ namespace Wizard_Aydin_Olga.Controllers
                     model.SpielerListe[i].SpielerName = "Spieler " + spielerZahl;
                 }
 
+                model.SpielerListe[1].AngesagteStiche = KIGegnerStiche(model);
+
                 List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
 
                 for (int r = 0; r < model.Runde; r++)
@@ -66,6 +59,17 @@ namespace Wizard_Aydin_Olga.Controllers
             return View("GameView", model);
         }
 
+        private int KIGegnerStiche(WizardModel model)
+        {
+            int randomStiche;
+
+            Random random = new Random();
+
+            randomStiche = random.Next(0, model.Runde);
+
+            return randomStiche;
+        }
+
         [HttpPost]
         public ActionResult GameView(WizardModel model)
         {
@@ -81,6 +85,8 @@ namespace Wizard_Aydin_Olga.Controllers
             {
                 List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
 
+                model.SpielerListe[1].AngesagteStiche = KIGegnerStiche(model);
+
                 for (int r = 0; r < model.Runde; r++)
                 {
                     kartenAufDerHand.Add(model.KartenDeck.FirstOrDefault());
@@ -90,16 +96,6 @@ namespace Wizard_Aydin_Olga.Controllers
                     model.KartenDeck.RemoveAt(0);
                 }
             }
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult GameAuswertungView(WizardModel model)
-        {
-            model.Runde++;
-
-            PunkteAuswertung(model);
-
             return View(model);
         }
 
@@ -180,35 +176,6 @@ namespace Wizard_Aydin_Olga.Controllers
             string trumpf = farben[index];
 
             return trumpf;
-        }
-
-
-        public ActionResult AuswahlStich()
-        {
-            //int anzahlStiche = aktuelleRunde++;
-
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AuswertungStich(WizardModel wizardModel)
-        {
-            //aktuelleRunde++;
-
-            //PunkteAuswertung(wizardModel);
-
-            return View(wizardModel);
-        }
-
-        public ActionResult PunkteAuswertung(WizardModel wizardModel)
-        {
-            if (wizardModel.SticheRichtigAngesagt)
-            {
-
-            }
-
-            return View();
         }
     }
 }
