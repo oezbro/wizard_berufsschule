@@ -31,7 +31,7 @@
                 <input id="startEvaluationFinal" type="submit" class="noChildren" value="Auswertung starten" />
             </div>
             <div class="opponentCardWrapper">
-                @foreach (var karte in Model.SpielerListe[0].KartenListe)
+                @foreach (var karte in Model.SpielerListe[1].KartenListe)
                 {
                     <div class="card" data-color="@karte.KartenFarbe" data-value="@karte.KartenWert" data-beatable="9" draggable="true" ondragstart="onDragStart(event);">
                         <img src="../Content/Karten/@karte.BildPfad" />
@@ -43,7 +43,7 @@
         <div class="ownCardDeck turn">
             <div class="turnOver">Zug beenden</div>
             <div class="ownCardWrapper">
-                @foreach (var karte in Model.SpielerListe[1].KartenListe)
+                @foreach (var karte in Model.SpielerListe[0].KartenListe)
                 {
                     <div class="card" data-color="@karte.KartenFarbe" data-value="@karte.KartenWert" data-beatable="11" draggable="true" ondragstart="onDragStart(event);">
                         <img src="../Content/Karten/@karte.BildPfad" />

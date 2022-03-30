@@ -136,3 +136,38 @@ function startNewRound() {
     document.querySelector(".opponentsCardDeck").querySelector(".active").classList.remove("active");
 
 }
+
+function computerSpielt() {
+    var model = @Html.Raw(Json.Encode(WizardModel));
+    for (let x = 0; x < model.SpielerListe[1].KartenListe.Count(); x++) {
+        /* Computer legt eine passende Computerkarte auf die Ablagekarten und beendet seinen Zug */
+
+        if (model.SpielerListe[1].KartenListe[x].KartenFarbe == kartenInDerMitte[0].KartenFarbe && model.SpielerListe[1].KartenListe[x].KartenWert > kartenInDerMitte[0].KartenWert) {
+            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
+            model.SpielerListe[1].KartenListe.RemoveAt(x);
+
+            /* "break", um zu verhindern, dass der Computer nicht mehr als einen Zug macht */
+            break;
+        }
+        else if (model.SpielerListe[1].KartenListe[x].KartenFarbe == model.Trumpf) {
+            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
+            model.SpielerListe[1].KartenListe.RemoveAt(x);
+            break;
+        }
+        else if (model.SpielerListe[1].KartenListe[x].KartenWert == 15) {
+            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
+            model.SpielerListe[1].KartenListe.RemoveAt(x);
+            break;
+        }
+        else if (model.SpielerListe[1].KartenListe[x].Any) {
+            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
+            model.SpielerListe[1].KartenListe.RemoveAt(x);
+            break;
+        }
+    }
+    /* Computer zieht eine Karte, falls Computer keine Computerkarte ablegen kann */
+
+    if (!spielerZug) {
+        computerZieht();
+    }
+}
