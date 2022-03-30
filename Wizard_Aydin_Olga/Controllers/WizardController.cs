@@ -31,7 +31,7 @@ namespace Wizard_Aydin_Olga.Controllers
         [HttpPost]
         public ActionResult StartView(WizardModel model)
         {
-            model.Runde = 7;
+            model.Runde = 1;
             model.SpielerAnzahl = 2;
 
             Random rand = new Random();
