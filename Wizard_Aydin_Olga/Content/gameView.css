@@ -317,6 +317,22 @@ form button[type="submit"]:hover {
 	font-size: 24px;
 }
 
+.playingGround .initial {
+	display: none;
+}
+
+.playingGround .middle {
+	display: block;
+}
+
+.opponentsCardDeck .initial {
+	display: block;
+}
+
+.opponentsCardDeck .middle {
+	display: none;
+}
+
 .playingGround .opponentsCardDeck .startEvaluation input:focus, .playingGround .opponentsCardDeck .startEvaluationFinal input:focus {
 	outline: none;
 }

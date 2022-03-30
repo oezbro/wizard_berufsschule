@@ -29,6 +29,7 @@ function onDrop(event) {
             document.querySelector(".turn").classList.remove("turn");
             document.querySelector(".noTurn").classList.remove("noTurn");
             ownButton.classList.remove("active");
+            computerSpielt();
         })
     } else {
         if (draggedElementParent.querySelector(".opponentCardWrapper").children.length > 0) {
@@ -39,7 +40,7 @@ function onDrop(event) {
     }
 }
 
-$("#startEvaluationFinal").click(function () {
+/*$("#startEvaluationFinal").click(function () {
     $.ajax({
         type: "POST",
         data: JSON.stringify(model),
@@ -47,16 +48,27 @@ $("#startEvaluationFinal").click(function () {
         contentType: "application/json"
     }).done(function (res) {
     });
-});
+});*/
+
+
+
 
 //Remove trickcontainer
 if (document.querySelector(".confirmationTricks")) {
     button = document.querySelector(".confirmationTricks");
     let buttParent = button.parentNode.parentNode;
     button.onclick = function () {
-    tricksAmount = document.querySelector(".trickamountContainer .trick input:checked").getAttribute("value");
+        tricksAmount = document.querySelector(".trickamountContainer .trick input:checked").getAttribute("value");
+        roundNumber = document.querySelector(".playingGround").getAttribute("data-round");
         buttParent.remove();
         document.querySelector(".ownCardDeck").style.pointerEvents = "all";
+        document.getElementById("ownTricksGuess").innerHTML = '<p>' + tricksAmount + '</p>';
+        document.querySelectorAll(".pointBoard .row").forEach(row => {
+            if (row.getAttribute("data-round") == roundNumber) {
+                row.querySelector(".playerOneTricks").innerHTML = '<p>' + tricksAmount + '</p>';
+                document.getElementById("botTricksGuess").innerHTML = '<p>' + row.querySelector(".playerTwoTricks").textContent + '</p>';
+            }
+        });
     }
 }
 
@@ -75,7 +87,8 @@ opponentTricks = 0;
 trumpColor = document.querySelector(".trumpDisplay > div").classList[0];
 ownName = document.querySelector(".playerOneName").textContent;
 opponentName = document.querySelector(".playerTwoName").textContent;
-document.getElementById("startEvaluation").onclick = function () {
+
+$("#startEvaluation, #startEvaluationFinal").on('click', function () {
     i = 0;
     document.querySelectorAll(".playingBoard .card").forEach(card => {
         if (i == 0) {
@@ -119,8 +132,11 @@ document.getElementById("startEvaluation").onclick = function () {
         }
         i++;
     });
-    startNewRound()
-}
+    document.getElementById("ownTricks").innerHTML = '<p>' + ownTricks + '</p>';
+    document.getElementById("botTricks").innerHTML = '<p>' + opponentTricks + '</p>';
+    startNewRound();
+});
+
 function changeText(name) {
     document.querySelector(".lightboxEvaluation").style.opacity = 1;
     document.querySelector(".lightboxEvaluation").innerHTML = '<p>' + name + ' hat den Stich gemacht!</p>' ;
@@ -138,36 +154,29 @@ function startNewRound() {
 }
 
 function computerSpielt() {
-    var model = @Html.Raw(Json.Encode(WizardModel));
-    for (let x = 0; x < model.SpielerListe[1].KartenListe.Count(); x++) {
+    for (let x = 0; x < document.querySelector(".opponentCardWrapper").children.length; x++) {
         /* Computer legt eine passende Computerkarte auf die Ablagekarten und beendet seinen Zug */
 
-        if (model.SpielerListe[1].KartenListe[x].KartenFarbe == kartenInDerMitte[0].KartenFarbe && model.SpielerListe[1].KartenListe[x].KartenWert > kartenInDerMitte[0].KartenWert) {
-            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
-            model.SpielerListe[1].KartenListe.RemoveAt(x);
+        if (document.querySelector(".opponentCardWrapper").children.item(x).dataset.color === document.querySelector(".playingBoard").children.item(0).dataset.color && document.querySelector(".opponentCardWrapper").children.item(x).dataset.value >= document.querySelector(".playingBoard").children.item(0).dataset.value) {
+            document.querySelector(".playingBoard").appendChild(document.querySelector(".opponentCardWrapper").children.item(x));
 
             /* "break", um zu verhindern, dass der Computer nicht mehr als einen Zug macht */
             break;
         }
-        else if (model.SpielerListe[1].KartenListe[x].KartenFarbe == model.Trumpf) {
-            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
-            model.SpielerListe[1].KartenListe.RemoveAt(x);
+        else if (document.querySelector(".opponentCardWrapper").children.item(x).dataset.color == document.querySelector(".playingBoard").children.item(0).dataset.color) {
+            document.querySelector(".playingBoard").appendChild(document.querySelector(".opponentCardWrapper").children.item(x));
             break;
         }
-        else if (model.SpielerListe[1].KartenListe[x].KartenWert == 15) {
-            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
-            model.SpielerListe[1].KartenListe.RemoveAt(x);
-            break;
-        }
-        else if (model.SpielerListe[1].KartenListe[x].Any) {
-            kartenInDerMitte[1].Add(model.SpielerListe[1].KartenListe[x]);
-            model.SpielerListe[1].KartenListe.RemoveAt(x);
+        else {
+            document.querySelector(".playingBoard").appendChild(document.querySelector(".opponentCardWrapper").children.item(x));
             break;
         }
     }
-    /* Computer zieht eine Karte, falls Computer keine Computerkarte ablegen kann */
 
-    if (!spielerZug) {
-        computerZieht();
+    if (document.querySelector(".opponentCardWrapper").children.length > 0) {
+        document.querySelector(".startEvaluation").classList.add("active");
+    } else {
+        document.querySelector(".startEvaluationFinal").classList.add("active");
     }
+
 }
