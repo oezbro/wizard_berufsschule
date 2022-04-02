@@ -22,14 +22,14 @@ namespace Wizard_Aydin_Olga.Controllers
         [HttpPost]
         public ActionResult StartView(WizardModel model)
         {
-            model.Runde = 1;
+            model.Runde = 10;
             model.SpielerAnzahl = 2;
 
             Random rand = new Random();
 
-            DeckMischen(model);
-
             model.Trumpf = TrumpfBestimmen();
+
+            DeckMischen(model);
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
@@ -112,7 +112,15 @@ namespace Wizard_Aydin_Olga.Controllers
                 model.KartenDeck = kartenImDeck;
             }
 
-            int s = 60 - (model.Runde * 4);
+            int s = 60;
+
+            foreach (WizardModel.Spieler spieler in model.SpielerListe)
+            {
+                if (spieler.KartenListe != null)
+                {
+                    s = 60 - spieler.KartenListe.Count();
+                }
+            }
 
             for (int i = 0; model.KartenDeck.Count() < s; i++)
             {
