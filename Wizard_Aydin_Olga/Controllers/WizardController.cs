@@ -27,9 +27,9 @@ namespace Wizard_Aydin_Olga.Controllers
 
             Random rand = new Random();
 
-            model.Trumpf = TrumpfBestimmen();
-
             DeckMischen(model);
+
+            model.Trumpf = TrumpfBestimmen();
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
@@ -39,8 +39,6 @@ namespace Wizard_Aydin_Olga.Controllers
 
                     model.SpielerListe[i].SpielerName = "Spieler " + spielerZahl;
                 }
-
-                model.SpielerListe[1].AngesagteStiche = KIGegnerStiche(model);
 
                 List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
 
@@ -73,19 +71,22 @@ namespace Wizard_Aydin_Olga.Controllers
         [HttpPost]
         public ActionResult GameView(WizardModel model)
         {
+            SticheAuswerten(model);
+
             model = wizardModel;
+
+            DeckMischen(model);
 
             Random rand = new Random();
 
             model.Runde++;
 
-            DeckMischen(model);
 
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
-                List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
-
                 model.SpielerListe[1].AngesagteStiche = KIGegnerStiche(model);
+
+                List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
 
                 for (int r = 0; r < model.Runde; r++)
                 {
@@ -176,6 +177,38 @@ namespace Wizard_Aydin_Olga.Controllers
             string trumpf = farben[index];
 
             return trumpf;
+        }
+
+        public void SticheAuswerten(WizardModel model)
+        {
+            model = wizardModel;
+
+            for (int i = 0; i < model.SpielerListe.Count(); i++)
+            {
+                if (model.SpielerListe[i].GemachteStiche == model.SpielerListe[i].AngesagteStiche)
+                {
+                    model.SpielerListe[i].PunkteProRunde += 20;
+
+
+                    if (model.SpielerListe[i].GemachteStiche > 0)
+                        for (int s = 0; s < model.SpielerListe[i].GemachteStiche; s++)
+                        {
+                            model.SpielerListe[i].PunkteProRunde += 10;
+
+                        }
+                }
+                else
+                {
+                    if (model.SpielerListe[i].GemachteStiche > model.SpielerListe[i].AngesagteStiche)
+                    {
+                        model.SpielerListe[i].PunkteProRunde = (model.SpielerListe[i].GemachteStiche - model.SpielerListe[i].AngesagteStiche) * 10;
+                    }
+                    else
+                    {
+                        model.SpielerListe[i].PunkteProRunde = (model.SpielerListe[i].AngesagteStiche - model.SpielerListe[i].GemachteStiche) * 10;
+                    }
+                }
+            }
         }
     }
 }

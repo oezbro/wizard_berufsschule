@@ -62,11 +62,11 @@ if (document.querySelector(".confirmationTricks")) {
         roundNumber = document.querySelector(".playingGround").getAttribute("data-round");
         buttParent.remove();
         document.querySelector(".ownCardDeck").style.pointerEvents = "all";
-        document.getElementById("ownTricksGuess").innerHTML = '<p>' + tricksAmount + '</p>';
+        document.getElementById("ownTricksGuess").setAttribute("value", tricksAmount);
         document.querySelectorAll(".pointBoard .row").forEach(row => {
             if (row.getAttribute("data-round") == roundNumber) {
                 row.querySelector(".playerOneTricks").innerHTML = '<p>' + tricksAmount + '</p>';
-                document.getElementById("botTricksGuess").innerHTML = '<p>' + row.querySelector(".playerTwoTricks").textContent + '</p>';
+                document.getElementById("botTricksGuess").setAttribute("value", row.querySelector(".playerTwoTricks").textContent);
             }
         });
     }
@@ -132,8 +132,8 @@ $("#startEvaluation, #startEvaluationFinal").on('click', function () {
         }
         i++;
     });
-    document.getElementById("ownTricks").innerHTML = '<p>' + ownTricks + '</p>';
-    document.getElementById("botTricks").innerHTML = '<p>' + opponentTricks + '</p>';
+    document.getElementById("ownTricks").setAttribute("value", ownTricks);
+    document.getElementById("botTricks").setAttribute("value", opponentTricks);
     startNewRound();
 });
 
@@ -159,18 +159,14 @@ function computerSpielt() {
 
         if (document.querySelector(".opponentCardWrapper").children.item(x).dataset.color === document.querySelector(".playingBoard").children.item(0).dataset.color && document.querySelector(".opponentCardWrapper").children.item(x).dataset.value >= document.querySelector(".playingBoard").children.item(0).dataset.value) {
             document.querySelector(".playingBoard").appendChild(document.querySelector(".opponentCardWrapper").children.item(x));
-
-            /* "break", um zu verhindern, dass der Computer nicht mehr als einen Zug macht */
-            break;
         }
         else if (document.querySelector(".opponentCardWrapper").children.item(x).dataset.color == document.querySelector(".playingBoard").children.item(0).dataset.color) {
             document.querySelector(".playingBoard").appendChild(document.querySelector(".opponentCardWrapper").children.item(x));
-            break;
         }
         else {
             document.querySelector(".playingBoard").appendChild(document.querySelector(".opponentCardWrapper").children.item(x));
-            break;
         }
+        break;
     }
 
     if (document.querySelector(".opponentCardWrapper").children.length > 0) {

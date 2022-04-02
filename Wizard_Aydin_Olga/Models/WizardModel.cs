@@ -23,16 +23,13 @@ namespace Wizard_Aydin_Olga.Models
             public bool IstNarr { get; set; }
             public string BildPfad { get; set; }
         }
-
         public class Spieler
         {
-            public List<int> PunkteProRunde { get; set; }
-            public List<int> AngesagteSticheProRunde { get; set; }
+            public int PunkteProRunde { get; set; }
             public string SpielerName { get; set; }
             public List<Karte> KartenListe { get; set; }
             public int GemachteStiche { get; set; }
             public int AngesagteStiche { get; set; }
-
         }
     }
 }
