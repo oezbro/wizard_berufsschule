@@ -26,8 +26,8 @@
             <div class="startEvaluation">
                 <input id="startEvaluation" class="children" value="Auswertung starten" />
             </div>
-            <div class="startEvaluationFinal" onclick="sticheInsModel()">
-                <input id="startEvaluationFinal" type="submit" class="noChildren" value="Auswertung starten" onclick="sticheInsModel()" />
+            <div class="startEvaluationFinal">
+                <input id="startEvaluationFinal" type="submit" class="noChildren" value="Auswertung starten" />
                 @Html.TextBoxFor(s => s.SpielerListe[0].GemachteStiche, new { id = "ownTricks", style = "visibility: hidden; height: 0px; width: 0px" })
                 @Html.TextBoxFor(r => r.SpielerListe[0].AngesagteStiche, new { id = "ownTricksGuess", style = "visibility: hidden; height: 0px; width: 0px" })
                 @Html.TextBoxFor(s => s.SpielerListe[1].GemachteStiche, new { id = "botTricks", style = "visibility: hidden; height: 0px; width: 0px" })

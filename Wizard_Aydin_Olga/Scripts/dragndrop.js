@@ -95,32 +95,38 @@ $("#startEvaluation, #startEvaluationFinal").on('click', function () {
             cardColor = card.getAttribute("data-color");
             cardNumber = card.getAttribute("data-value");
         } else {
-            if (card.getAttribute("data-color") == cardColor) {
-                if (card.getAttribute("data-value") > cardNumber) {
-                    opponentTricks = (opponentTricks + 1);
-                    changeText(opponentName);
-                } else {
-                    ownTricks = (ownTricks + 1);
-                    changeText(ownName);
-                }
-            } else if (card.getAttribute("data-color") != cardColor) {
-                if (cardColor.includes(trumpColor) && !card.getAttribute("data-color").includes(trumpColor) && card.getAttribute("data-color") != 15) {
-                    ownTricks = (ownTricks + 1);
-                    changeText(ownName);
-                } else if (!cardColor.includes(trumpColor) && card.getAttribute("data-color").includes(trumpColor) && cardNumber != 15) {
-                    opponentTricks = (opponentTricks + 1);
-                    changeText(opponentName);
-                } else if (cardColor.includes(trumpColor) && card.getAttribute("data-color").includes(trumpColor) && cardNumber != 15) {
-                    if (card.getAttribute("data-value") > cardNumber) {
+            if (cardNumber != 15 && cardNumber != 14 && card.getAttribute("data-value") != 15 && card.getAttribute("data-value") != 14) {
+                if (card.getAttribute("data-color") == cardColor) {
+                    if (card.getAttribute("data-value") < cardNumber) {
+                        ownTricks = (ownTricks + 1);
+                        changeText(ownName);
+                    } else {
+                        opponentTricks = (opponentTricks + 1);
+                        changeText(opponentName);
+                    }
+                } else if (card.getAttribute("data-color") != cardColor) {
+                    if (cardColor.includes(trumpColor) && !card.getAttribute("data-color").includes(trumpColor) && card.getAttribute("data-value") != 15) {
+                        ownTricks = (ownTricks + 1);
+                        changeText(ownName);
+                    } else if (!cardColor.includes(trumpColor) && card.getAttribute("data-color").includes(trumpColor)) {
+                        opponentTricks = (opponentTricks + 1);
+                        changeText(opponentName);
+                    } else if (cardColor.includes(trumpColor) && card.getAttribute("data-color").includes(trumpColor)) {
+                        if (card.getAttribute("data-value") > cardNumber) {
+                            opponentTricks = (opponentTricks + 1);
+                            changeText(opponentName);
+                        } else {
+                            ownTricks = (ownTricks + 1);
+                            changeText(ownName);
+                        }
+                    }
+                    else if (card.getAttribute("data-value") == 15) {
                         opponentTricks = (opponentTricks + 1);
                         changeText(opponentName);
                     } else {
                         ownTricks = (ownTricks + 1);
                         changeText(ownName);
                     }
-                } else {
-                    ownTricks = (ownTricks + 1);
-                    changeText(ownName);
                 }
             } else if ((cardNumber == 14 && card.getAttribute("data-value") != 14) || (cardNumber != 15 && card.getAttribute("data-value") == 15)) {
                 opponentTricks = (opponentTricks + 1);
