@@ -40,6 +40,8 @@ namespace Wizard_Aydin_Olga.Controllers
                     model.SpielerListe[i].SpielerName = "Spieler " + spielerZahl;
                 }
 
+                model.SpielerListe[1].AngesagteStiche = KIGegnerStiche(model);
+
                 List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
 
                 for (int r = 0; r < model.Runde; r++)
@@ -54,7 +56,7 @@ namespace Wizard_Aydin_Olga.Controllers
 
             wizardModel = model;
 
-            return View("GameView", model);
+            return View("GameView", wizardModel);
         }
 
         private int KIGegnerStiche(WizardModel model)
@@ -71,9 +73,12 @@ namespace Wizard_Aydin_Olga.Controllers
         [HttpPost]
         public ActionResult GameView(WizardModel model)
         {
+            for (int i = 0; i < 2; i++)
+            {
+                wizardModel.SpielerListe[i].AngesagteStiche = model.SpielerListe[i].AngesagteStiche;
+                wizardModel.SpielerListe[i].GemachteStiche = model.SpielerListe[i].GemachteStiche;
+            }
             model = wizardModel;
-
-            SticheAuswerten(model);
 
             DeckMischen(model);
 
@@ -81,9 +86,10 @@ namespace Wizard_Aydin_Olga.Controllers
 
             model.Runde++;
 
-
             for (int i = 0; i < model.SpielerAnzahl; i++)
             {
+                model.SpielerListe[i].PunkteProRunde = SticheAuswerten(model.SpielerListe[i]);
+
                 model.SpielerListe[1].AngesagteStiche = KIGegnerStiche(model);
 
                 List<WizardModel.Karte> kartenAufDerHand = new List<WizardModel.Karte>();
@@ -96,8 +102,9 @@ namespace Wizard_Aydin_Olga.Controllers
 
                     model.KartenDeck.RemoveAt(0);
                 }
+                wizardModel = model;
             }
-            return View(model);
+            return View(wizardModel);
         }
 
         public void DeckMischen(WizardModel model)
@@ -187,43 +194,41 @@ namespace Wizard_Aydin_Olga.Controllers
             return trumpf;
         }
 
-        public void SticheAuswerten(WizardModel model)
+        public int SticheAuswerten(WizardModel.Spieler spieler)
         {
-            foreach (WizardModel.Spieler spieler in model.SpielerListe)
+            if (spieler.GemachteStiche == spieler.AngesagteStiche)
             {
-                if (spieler.GemachteStiche == spieler.AngesagteStiche)
+                for (int s = 1; s <= spieler.GemachteStiche; s++)
                 {
-                    for (int s = 0; s <= spieler.GemachteStiche; s++)
-                    {
-                        spieler.PunkteProRunde += 10;
-                    }
-                    spieler.PunkteProRunde += 20;
+                    spieler.PunkteProRunde += 10;
                 }
-                else if (spieler.GemachteStiche != spieler.AngesagteStiche)
+                spieler.PunkteProRunde += 20;
+            }
+            else if (spieler.GemachteStiche != spieler.AngesagteStiche)
+            {
+                if (spieler.GemachteStiche > spieler.AngesagteStiche)
                 {
+                    int differenz;
+                    differenz = spieler.GemachteStiche - spieler.AngesagteStiche;
 
-                    if (spieler.GemachteStiche > spieler.AngesagteStiche)
+                    for (int f = 1; f <= differenz; f++)
                     {
-                        int differenz;
-                        differenz = spieler.GemachteStiche - spieler.AngesagteStiche;
-
-                        for (int f = 1; f <= differenz; f++)
-                        {
-                            spieler.PunkteProRunde -= 10;
-                        }
+                        spieler.PunkteProRunde -= 10;
                     }
-                    else if (spieler.GemachteStiche < spieler.AngesagteStiche)
+                }
+                else if (spieler.GemachteStiche < spieler.AngesagteStiche)
+                {
+                    int unterschied;
+                    unterschied = spieler.AngesagteStiche - spieler.GemachteStiche;
+
+                    for (int s = 1; s <= unterschied; s++)
                     {
-                        int unterschied;
-                        unterschied = spieler.AngesagteStiche - spieler.GemachteStiche;
-
-                        for (int s = 1; s <= unterschied; s++)
-                        {
-                            spieler.PunkteProRunde -= 10;
-                        }
+                        spieler.PunkteProRunde -= 10;
                     }
+
                 }
             }
+            return spieler.PunkteProRunde;
         }
     }
 }
