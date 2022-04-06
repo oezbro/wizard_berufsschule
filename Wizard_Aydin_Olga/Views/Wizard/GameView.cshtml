@@ -16,11 +16,11 @@
             <div class="confirmationTricks">Bestätigen</div>
         </div>
     </div>
-    <div class="lightboxEvaluation">
+    @*<div class="lightboxEvaluation">
         <div class="evaluationText">
             <p></p>
         </div>
-    </div>
+    </div>*@
     <div class="playingGround" data-round="@Model.Runde">
         <div class="opponentsCardDeck noTurn">
             <div class="startEvaluation">
@@ -55,6 +55,9 @@
                 }
             </div>
         </div>
+
+        <div id="opponentTrickAmount"><p><span class="placeholder">0</span> gemachte Stiche</p></div>
+        <div id="ownTrickAmount"><p><span class="placeholder">0</span> gemachte Stiche</p></div>
 
         <div class="trumpDisplay">
             <p>Trumpf:</p>

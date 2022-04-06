@@ -73,12 +73,12 @@ if (document.querySelector(".confirmationTricks")) {
 }
 
 //Remove evaluationcontainer after 3000ms
-if (document.querySelector(".lightboxEvaluation")) {
-    setTimeout(function () {
-        document.querySelector(".lightboxEvaluation").style.opacity = 0;
-        document.querySelector(".lightboxEvaluation").style.pointerEvents = 'none';
-    }, 3000);
-}
+//if (document.querySelector(".lightboxEvaluation")) {
+//    setTimeout(function () {
+//        document.querySelector(".lightboxEvaluation").style.opacity = 0;
+//        document.querySelector(".lightboxEvaluation").style.pointerEvents = 'none';
+//    }, 3000);
+//}
 
 // Evaluation helper
 roundNumber = document.querySelector(".playingGround").getAttribute("data-round");
@@ -99,54 +99,46 @@ $("#startEvaluation, #startEvaluationFinal").on('click', function () {
                 if (card.getAttribute("data-color") == cardColor) {
                     if (card.getAttribute("data-value") < cardNumber) {
                         ownTricks = (ownTricks + 1);
-                        changeText(ownName);
                     } else {
                         opponentTricks = (opponentTricks + 1);
-                        changeText(opponentName);
                     }
                 } else if (card.getAttribute("data-color") != cardColor) {
                     if (cardColor.includes(trumpColor) && !card.getAttribute("data-color").includes(trumpColor) && card.getAttribute("data-value") != 15) {
                         ownTricks = (ownTricks + 1);
-                        changeText(ownName);
                     } else if (!cardColor.includes(trumpColor) && card.getAttribute("data-color").includes(trumpColor)) {
                         opponentTricks = (opponentTricks + 1);
-                        changeText(opponentName);
                     } else if (cardColor.includes(trumpColor) && card.getAttribute("data-color").includes(trumpColor)) {
                         if (card.getAttribute("data-value") > cardNumber) {
                             opponentTricks = (opponentTricks + 1);
-                            changeText(opponentName);
                         } else {
                             ownTricks = (ownTricks + 1);
-                            changeText(ownName);
                         }
                     }
                     else if (card.getAttribute("data-value") == 15) {
                         opponentTricks = (opponentTricks + 1);
-                        changeText(opponentName);
                     } else {
                         ownTricks = (ownTricks + 1);
-                        changeText(ownName);
                     }
                 }
             } else if ((cardNumber == 14 && card.getAttribute("data-value") != 14) || (cardNumber != 15 && card.getAttribute("data-value") == 15)) {
                 opponentTricks = (opponentTricks + 1);
-                changeText(opponentName);
             } else if ((cardNumber != 14 && card.getAttribute("data-value") == 14) || (cardNumber == 14 && card.getAttribute("data-value") == 14) || (cardNumber == 15 && card.getAttribute("data-value") != 15) || (cardNumber == 15 && card.getAttribute("data-value") == 15)) {
                 ownTricks = (ownTricks + 1);
-                changeText(ownName);
             }
         }
         i++;
     });
+    document.getElementById("ownTrickAmount").querySelector(".placeholder").innerHTML = ownTricks;
+    document.getElementById("opponentTrickAmount").querySelector(".placeholder").innerHTML = opponentTricks;
     document.getElementById("ownTricks").setAttribute("value", ownTricks);
     document.getElementById("botTricks").setAttribute("value", opponentTricks);
     startNewRound();
 });
 
-function changeText(name) {
-    document.querySelector(".lightboxEvaluation").style.opacity = 1;
-    document.querySelector(".lightboxEvaluation").innerHTML = '<p>' + name + ' hat den Stich gemacht!</p>' ;
-}
+//function changeText(name) {
+//    document.querySelector(".lightboxEvaluation").style.opacity = 1;
+//    document.querySelector(".lightboxEvaluation").innerHTML = '<p>' + name + ' hat den Stich gemacht!</p>' ;
+//}
 
 function startNewRound() {
     document.querySelector(".playingBoard").querySelectorAll(".card").forEach(card => {

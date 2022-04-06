@@ -475,3 +475,19 @@ form button[type="submit"]:hover {
 	max-width: 40px;
 	width: 100%;
 }
+
+#opponentTrickAmount {
+	position: absolute;
+	top: 180px;
+	right: 50px;
+}
+
+#ownTrickAmount {
+	position: absolute;
+	top: 380px;
+	right: 50px;
+}
+
+#opponentTrickAmount p, #ownTrickAmount p {
+	color: #fff;
+}
