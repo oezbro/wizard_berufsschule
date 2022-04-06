@@ -96,10 +96,10 @@ $("#startEvaluation, #startEvaluationFinal").on('click', function () {
             cardNumber = card.getAttribute("data-value");
         } else {
             if (cardNumber != 15 && cardNumber != 14 && card.getAttribute("data-value") != 15 && card.getAttribute("data-value") != 14) {
-                if (card.getAttribute("data-color") == cardColor) {
+                if (card.getAttribute("data-color") === cardColor) {
                     if (card.getAttribute("data-value") < cardNumber) {
                         ownTricks = (ownTricks + 1);
-                    } else {
+                    } else if (card.getAttribute("data-value") > cardNumber) {
                         opponentTricks = (opponentTricks + 1);
                     }
                 } else if (card.getAttribute("data-color") != cardColor) {
