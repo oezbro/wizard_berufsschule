@@ -65,7 +65,9 @@ namespace Wizard_Aydin_Olga.Controllers
 
             Random random = new Random();
 
-            randomStiche = random.Next(0, model.Runde);
+            int maxStiche = model.Runde + 1;
+
+            randomStiche = random.Next(0, maxStiche);
 
             return randomStiche;
         }
